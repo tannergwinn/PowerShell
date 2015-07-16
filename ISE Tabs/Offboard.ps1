@@ -16,13 +16,13 @@ foreach ($O in $Offboard)
 
 
 {
-    Get-ADUser -Filter "SamAccountName -eq '$($o.samaccountname)'" -Properties UserPrincipalName, SamAccountName |
+    #Get-ADUser -Filter "SamAccountName -eq '$($o.samaccountname)'" -Properties UserPrincipalName, SamAccountName |
 
-    Remove-ADPrincipalGroupMembership -MemberOf "O365_Users" -Confirm:$false
+    #Remove-ADPrincipalGroupMembership -MemberOf "O365*" -Confirm:$false
 
-    Get-MsolUser -UserPrincipalName $o.UserPrincipalName 
+    #Get-MsolUser -UserPrincipalName $o.UserPrincipalName 
 
-    Set-MsolUserLicense -UserPrincipalName $o.UserPrincipalName -RemoveLicenses Colonyamerican:STANDARDPACK |
+    #Set-MsolUserLicense -UserPrincipalName $o.UserPrincipalName -RemoveLicenses Colonyamerican:STANDARDPACK |
 
     Remove-MsolUser -UserPrincipalName $o.UserPrincipalName -Force
 
