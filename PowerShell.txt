@@ -1,7 +1,0 @@
-To export contents of folder into .csv
-
-dir "\\dc02-cah.colonyah.local\colonyamerican\14.Property Management\_Filing System\SEC2 042314 ##DO NOT USE##" ">C:\users\a.hart\Desktop\Report.csv"
-
-To export Members of a group to .csv
-
-dsquery group -name “BI Reporting” | dsget group -members > C:\Users\a.hart\Desktop\memberlist.csv

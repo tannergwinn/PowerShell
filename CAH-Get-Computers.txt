@@ -1,8 +1,0 @@
-1. Right-Click PowerShell in Start menu and select "Run as Administrator"
-2. Copy and paste or type Set-ExecutionPolicy -ExecutionPolicy 'RemoteSigned' in the PowerShell console and enter “Y” and press enter when prompted
-3. Copy and paste or type Import-Module ActiveDirectory in the PowerShell console and enter “Y” and press enter when prompted
-4. Go to the folder where you saved the script and type the following: .\CAH-Get-Computer-In-AD.ps1
-
-The script will start running and show its progress.
-
-When the script is done, you should have an Excel file in your "Documents" folder named "CAH_AD_Computers-yyyyMMdd_HHmmss.xlsx" where "yyyyMMdd_HHmmss" is the date/time you started the script.
