@@ -112,8 +112,8 @@ Get-MailboxFolderPermission –Identity Dana.dunn@colonyamerican.com:\Calendar |
 
 #Add rights to a mailbox
 
-$MBX = write Agourahillsfax@Colonyamerican.com  
-$MUser = write  angela.dias@colonyamerican.com
+$MBX = write leah.granovskaya@colonyamericanfinance.com  
+$MUser = write  Ariel.hart@colonyamerican.com
 
 Get-Mailbox $MBX |
     Add-MailboxPermission -User $MUser -AccessRights FullAccess -InheritanceType All |

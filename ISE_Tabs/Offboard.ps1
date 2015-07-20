@@ -29,4 +29,10 @@ foreach ($O in $Offboard)
 }
 
 
-   
+
+$aliasName = "Joanna.Vu@colonyamericanfinance.com"
+
+$MbxUser = "leah.granovskaya@colonyamericanfinance.com"
+
+Get-ADUser -Filter {Userprincipalname -eq $MbxUser} -Properties * | Set-ADUser -Add @{Proxyaddresses="smtp:$aliasName"}
+
