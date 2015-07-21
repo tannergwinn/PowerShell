@@ -130,7 +130,7 @@ Remove-MailboxPermission -Identity $RMBX -User $RMUser -AccessRights FullAccess 
 
 #Set Primary email address
 
-Set-Mailbox a.giunta@colonyamerican.onmicrosoft.com -EmailAddress SMTP:Angela.kay@colonyamerican.com
+Set-Mailbox Leah.granovskaya@colonyamerican.onmicrosoft.com -EmailAddress SMTP:Leah.granovskaya@colonyamericanfinance.com
 
 #Calendar Manipulation
 
@@ -250,7 +250,7 @@ get-mailbox | get-mailboxpermission -User "john.smith@colonyamerican.com" | fl i
 
 
 
-get-mailbox | get-mailboxpermission -User "john.smith@colonyamerican.com" | Get-MailboxStatistics | FT Displayname, totalitemsize -AutoSize
+get-mailbox | get-mailboxpermission -User "mike.oneil@colonyamerican.com" | Get-MailboxStatistics | FT Displayname, totalitemsize -AutoSize
 
 #List user calendar access
 

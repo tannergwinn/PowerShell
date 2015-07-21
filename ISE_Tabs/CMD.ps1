@@ -20,3 +20,6 @@ wmic product where "description='Symantec Endpoint Protection' " uninstall && wu
 
 
 psexec \\A2167548 cmd wmic product where "description='Symantec Endpoint Protection' " uninstall
+
+wmic product where "description='Microsoft office Professional Plus 2010' " uninstall
+
