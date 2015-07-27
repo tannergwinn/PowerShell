@@ -250,7 +250,7 @@ get-mailbox | get-mailboxpermission -User "john.smith@colonyamerican.com" | fl i
 
 
 
-get-mailbox | get-mailboxpermission -User "mike.oneil@colonyamerican.com" | Get-MailboxStatistics | FT Displayname, totalitemsize -AutoSize
+get-mailbox | get-mailboxpermission -User "crystal.green@colonyamerican.com" | Get-MailboxStatistics | FT Displayname, totalitemsize -AutoSize
 
 #List user calendar access
 
