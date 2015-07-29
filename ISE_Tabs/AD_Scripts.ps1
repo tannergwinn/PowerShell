@@ -148,3 +148,6 @@ Get-ADComputer -filter {cn -like "PRNT*"} -Properties  LastLogonTimestamp|
  Format-Table -AutoSize
 
 \\dfs01\IT\IT - Public\Printers\prnt02
+
+#Move AD computer
+get-adcomputer A2200656 | Move-ADObject -TargetPath "OU=Englewood,OU=CAH_Computers,DC=colonyah,DC=local"
