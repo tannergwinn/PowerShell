@@ -1,6 +1,6 @@
 ﻿#Add rights to a mailbox
 
-$MBX = write @colonyamerican.com  
+$MBX = write Paula.Berg@colonyamerican.com  
 $MUser = write  ariel.hart@colonyamerican.com 
 
 Get-Mailbox $MBX |
@@ -8,7 +8,7 @@ Get-Mailbox $MBX |
     Add-RecipientPermission -AccessRights SendAs -Trustee $MUser -Confirm:$false
 
 #Remove rights to a mailbox
-$RMBX = write leah.granovskaya@colonyamericanfinance.com 
+$RMBX = write tony.mcintyre@colonyamerican.com 
 $RMUser = write ariel.hart@colonyamerican.com
 
 Remove-MailboxPermission -Identity $RMBX -User $RMUser -AccessRights FullAccess -InheritanceType All -Confirm:$false
