@@ -23,3 +23,4 @@ psexec \\A2167548 cmd wmic product where "description='Symantec Endpoint Protect
 
 wmic product where "description='Microsoft office Professional Plus 2010' " uninstall
 
+psexec \\A2370829 cmd wuauclt.exe /detectnow /updatenow && gpupdate /force /boot

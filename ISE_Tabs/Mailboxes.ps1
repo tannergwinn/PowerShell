@@ -17,3 +17,9 @@ Remove-MailboxPermission -Identity $RMBX -User $RMUser -AccessRights FullAccess 
 
 Set-Mailbox Leah.granovskaya@colonyamerican.onmicrosoft.com -EmailAddress SMTP:Leah.granovskaya@colonyamericanfinance.com
 
+#List what mailboxes user has access to
+
+get-mailbox | get-mailboxpermission -User "john.smith@colonyamerican.com" | fl identity
+
+#With sizes
+get-mailbox | get-mailboxpermission -User "shawna.winstead@colonyamerican.com" | Get-MailboxStatistics | FT Displayname, totalitemsize -AutoSize

@@ -1,6 +1,6 @@
 ﻿#Remove from all AD groups
 
-$users= Import-Csv C:\ScriptsOutput\TestUsers.csv | foreach {Get-ADUser -Filter "SamAccountName -eq '$($_.SAMAccountName)'"} #get-aduser -Filter * -SearchBase "ou=ExEmployees,dc=contoso,dc=com"
+$users= get-aduser -filter 'enabled -eq $false' -Properties SamAccountName, UserPrincipalName -SearchBase "OU=CAH_MailBox_Backup,DC=colonyah,DC=local"
 
 Function RemoveMemberships
 
