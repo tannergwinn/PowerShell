@@ -151,3 +151,6 @@ Get-ADComputer -filter {cn -like "PRNT*"} -Properties  LastLogonTimestamp|
 
 #Move AD computer
 get-adcomputer A2200656 | Move-ADObject -TargetPath "OU=Englewood,OU=CAH_Computers,DC=colonyah,DC=local"
+
+#Find some people, get some stuff
+Get-ADUser -filter {(title -like "customer service *") -or (title -like "CSR")} -Properties Displayname, physicalDeliveryOfficeName | Select-Object Displayname, physicalDeliveryOfficeName |Export-Csv C:\Scriptsoutput\CSR.csv
