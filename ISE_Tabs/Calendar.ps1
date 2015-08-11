@@ -2,10 +2,10 @@
 
 ##Calendar permissions-
 
-$Owner = write arik.prawer@colonyamerican.com:\Calendar
-$Requestor = write amy.steiner@colonyamerican.com 
+$Owner =  "Angel Rosario:\Calendar"
+$Requestor = "Terry Piard"
 
-add-MailboxFolderPermission -Identity $Owner -User $Requestor -AccessRights PublishingAuthor
+add-MailboxFolderPermission -Identity $Owner -User $Requestor -AccessRights PublishingEditor
 
 ##Access Levels-
 Owner, PublishingEditor, Editor, PublishingAuthor, Author, NonEditingAuthor, Reviewer, Contributor, AvailabilityOnly, LimitedDetails
@@ -13,9 +13,9 @@ Owner, PublishingEditor, Editor, PublishingAuthor, Author, NonEditingAuthor, Rev
 Remove-MailboxFolderPermission -Identity $Owner -user $Requestor
 
 ##View Permissions-
-Get-MailboxFolderPermission –Identity $owner
+Get-MailboxFolderPermission –Identity $Owner
 
-Get-MailboxFolderPermission –Identity Dana.dunn@colonyamerican.com:\Calendar | FT User, AccessRights -AutoSize
+Get-MailboxFolderPermission –Identity Dana.dunn@colonyamerican.com:\Calendar | FT identity,User, AccessRights -AutoSize
 
 #Calendar Manipulation
 
@@ -25,7 +25,12 @@ add-MailboxFolderPermission -Identity brad.hull@colonyamerican.com:\Calendar -Us
 ##Access Levels-
 ##Owner PublishingEditor, Editor, PublishingAuthor, Author, NonEditingAuthor, Reviewer, Contributor, AvailabilityOnly, LimitedDetails
 
-Remove-MailboxFolderPermission -Identity user@mycompany:\calendar -user myuser@mycompany.com
+Remove-MailboxFolderPermission -Identity $Owner -user $Requestor
 
 #View Permissions-
 Get-MailboxFolderPermission –Identity ariel.hart@colonyamerican.com:\calendar
+
+
+#Attempt at bulk retrieval of Calendar permissions
+
+

@@ -23,4 +23,12 @@ Set-Mailbox Leah.granovskaya@colonyamerican.onmicrosoft.com -EmailAddress SMTP:
 get-mailbox | get-mailboxpermission -User "john.smith@colonyamerican.com" | fl identity
 
 #With sizes
-get-mailbox | get-mailboxpermission -User "svc_mail_archive@colonyamerican.com" | Get-MailboxStatistics | FT Displayname, totalitemsize -AutoSize
+get-mailbox | get-mailboxpermission -User "melissa.ferris@colonyamerican.com" | Get-MailboxStatistics | FT Displayname, totalitemsize -AutoSize
+
+# Bulk add users to mail group
+$AMembers = "Victoria Greene",	"Terry Piard",	"Nicole Donowick"
+
+foreach ($AMember in $Amembers)
+{
+Add-DistributionGroupMember "Property Management – HOA Distribution List" -Member $AMember -BypassSecurityGroupManagerCheck
+}
