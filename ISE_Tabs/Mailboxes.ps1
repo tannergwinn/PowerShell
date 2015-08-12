@@ -1,15 +1,15 @@
 ﻿#Add rights to a mailbox
 
-$MBX = "Utilities@colonyamerican.com"  
-$MUser = "svc_mail_archive@colonyamerican.com" 
+$MBX = "Rentals"  
+$MUser = "ariel hart" 
 
 Get-Mailbox $MBX |
     Add-MailboxPermission -User $MUser -AccessRights FullAccess -InheritanceType All |
     Add-RecipientPermission -AccessRights SendAs -Trustee $MUser -Confirm:$false
 
 #Remove rights to a mailbox
-$RMBX = "Claire.caldwell@colonyamerican.com" 
-$RMUser = "svc_mail_archive@colonyamerican.com"
+$RMBX = "Michael Nash" 
+$RMUser = "Ariel hart"
 
     Remove-MailboxPermission -Identity $RMBX -User $RMUser -AccessRights FullAccess -InheritanceType All -Confirm:$false|
     Remove-RecipientPermission -AccessRights SendAs -Trustee $RMUser -Confirm:$false
@@ -23,7 +23,7 @@ Set-Mailbox Leah.granovskaya@colonyamerican.onmicrosoft.com -EmailAddress SMTP:
 get-mailbox | get-mailboxpermission -User "john.smith@colonyamerican.com" | fl identity
 
 #With sizes
-get-mailbox | get-mailboxpermission -User "melissa.ferris@colonyamerican.com" | Get-MailboxStatistics | FT Displayname, totalitemsize -AutoSize
+get-mailbox | get-mailboxpermission -User "lynette guck" | Get-MailboxStatistics | FT Displayname, totalitemsize -AutoSize
 
 # Bulk add users to mail group
 $AMembers = "Victoria Greene",	"Terry Piard",	"Nicole Donowick"
