@@ -1,10 +1,7 @@
 ﻿Break
 
 #Connect to O365
-$LiveCred = Get-Credential
-$Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://ps.outlook.com/powershell/ -Credential $LiveCred -Authentication Basic -AllowRedirection
-Import-PSSession $Session
-connect-msolservice -credential $LiveCred
+1
 
 #Disconnect O365
 Remove-PSSession $Session

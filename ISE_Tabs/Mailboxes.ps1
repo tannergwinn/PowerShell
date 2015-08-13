@@ -1,7 +1,7 @@
 ﻿#Add rights to a mailbox
 
-$MBX = "Rentals"  
-$MUser = "ariel hart" 
+$MBX = "Lynnette guck"  
+$MUser = "svc_mail_Archive" 
 
 Get-Mailbox $MBX |
     Add-MailboxPermission -User $MUser -AccessRights FullAccess -InheritanceType All |
