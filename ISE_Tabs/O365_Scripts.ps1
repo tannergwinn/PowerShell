@@ -170,7 +170,7 @@ Get-MsolGroupMember -groupObjectid 'b5a0ef9b-ebe6-41e9-8df5-8d8446b5039d' | Sele
 
 #remove MSOLGroup
 
-
+Remove-MsolGroup -ObjectId '' -Force
 
 #Dynamic email Groups
 

@@ -30,9 +30,23 @@ foreach ($O in $Offboard)
 
 
 
-$aliasName = "Joanna.Vu@colonyamericanfinance.com"
+$users= get-aduser -filter 'enabled -eq $false' -Properties SamAccountName, UserPrincipalName -SearchBase "OU=CAH_MailBox_Backup,DC=colonyah,DC=local"
 
-$MbxUser = "leah.granovskaya@colonyamericanfinance.com"
+Function RemoveMemberships
 
-Get-ADUser -Filter {Userprincipalname -eq $MbxUser} -Properties * | Set-ADUser -Add @{Proxyaddresses="smtp:$aliasName"}
+{
 
+param([string]$SAMAccountName) 
+
+$user = Get-ADUser $SAMAccountName -properties memberof
+
+$userGroups = $user.memberof
+
+$userGroups | %{get-adgroup $_ | Remove-ADGroupMember -confirm:$false -member $SAMAccountName}
+
+$userGroups = $null
+
+}
+
+
+$users | %{RemoveMemberships $_.SAMAccountName}
