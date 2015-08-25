@@ -1,6 +1,6 @@
 ﻿#Add rights to a mailbox
 
-$MBX = "Stephanie Campbell"  
+$MBX = "Tampa Maintenance"  
 $MUser = "Ariel Hart" 
 
 Get-Mailbox $MBX |
@@ -8,7 +8,7 @@ Get-Mailbox $MBX |
     Add-RecipientPermission -AccessRights SendAs -Trustee $MUser -Confirm:$false
 
 #Remove rights to a mailbox
-$RMBX = "Atlanta South Prospects" 
+$RMBX = "Rentals" 
 $RMUser = "Ariel Hart"
 
     Remove-MailboxPermission -Identity $RMBX -User $RMUser -AccessRights FullAccess -InheritanceType All -Confirm:$false
@@ -20,7 +20,7 @@ Set-Mailbox Leah.granovskaya@colonyamerican.onmicrosoft.com -EmailAddress SMTP:
 
 #List what mailboxes user has access to
 
-get-mailbox | get-mailboxpermission -User "SVC_Mail_Archive@colonyamerican.com" | fl identity
+get-mailbox | get-mailboxpermission -User "Ariel.Hart@colonyamerican.com" | fl identity
 
 #With sizes
 get-mailbox | get-mailboxpermission -User "Stephanie Campbell" | Get-MailboxStatistics | FT Displayname, totalitemsize -AutoSize

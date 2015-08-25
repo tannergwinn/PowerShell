@@ -153,7 +153,7 @@ Get-MsolUser -UserPrincipalName $user
     Remove-MsolUser -UserPrincipalName $user -RemoveFromRecyclebin
 
 #Create dynamic distribution list
-	New-DynamicDistributionGroup -Name "Property Management - Riverside" -RecipientFilter {(RecipientType -eq 'UserMailbox') -and (Office -like 'Riverside')}
+	New-DynamicDistributionGroup -Name "Property Management - Nashville" -RecipientFilter {(RecipientType -eq 'UserMailbox') -and (Office -like 'Nashville')}
 
 
 #Get alias list
