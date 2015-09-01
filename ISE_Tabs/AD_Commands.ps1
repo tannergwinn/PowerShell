@@ -75,7 +75,7 @@ $users = Import-Csv -Path C:\temp\UpdateADAttributes.csv
 foreach ($user in $users) 
 
 {            
-Get-ADUser -Filter "SamAccountName -eq '$($user.samaccountname)'" -Properties * -SearchBase "OU=CAH_Users,DC=colonyah,DC=local" 
+Get-ADUser -Filter "SamAccountName -eq '$user" -Properties * -SearchBase "OU=CAH_Users,DC=colonyah,DC=local" 
  |            
   Set-ADUser -MobilePhone $($user.MobilePhone) -OfficePhone $($user.OfficePhone)
 }
@@ -154,3 +154,13 @@ get-adcomputer A2113980 | Move-ADObject -TargetPath "OU=Scottsdale,OU=CAH_Comput
 
 #Find some people, get some stuff
 Get-ADUser -filter {(title -like "customer service *") -or (title -like "CSR")} -Properties Displayname, physicalDeliveryOfficeName | Select-Object Displayname, physicalDeliveryOfficeName |Export-Csv C:\Scriptsoutput\CSR.csv
+
+# Bulk add to group
+$users = Get-Content C:\ScriptSources\Atlas2.csv
+
+foreach ($user in $users) 
+
+{
+Add-ADGroupMember -Identity Atlas -Members $user
+} 
+ 

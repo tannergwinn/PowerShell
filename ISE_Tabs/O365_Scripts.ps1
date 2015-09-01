@@ -1,7 +1,10 @@
 ﻿Break
 
 #Connect to O365
-1
+$LiveCred = Get-Credential
+$Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://ps.outlook.com/powershell/ -Credential $LiveCred -Authentication Basic -AllowRedirection
+Import-PSSession $Session
+connect-msolservice -credential $LiveCred
 
 #Disconnect O365
 Remove-PSSession $Session
@@ -12,9 +15,9 @@ connect-msolservice -credential $msolcred
 
 #Removing single users from O365 (license already removed)
 
-$User = write Andy.witt@colonyamerican.com
+$User = "carlos.quintanilla@colonyamerican.com"
     Get-MsolUser -UserPrincipalName $User
-    Set-MsolUserLicense -UserPrincipalName $user -RemoveLicenses Colonyamerican:STANDARDPACK
+    #Set-MsolUserLicense -UserPrincipalName $user -RemoveLicenses Colonyamerican:STANDARDPACK
     Remove-MsolUser -UserPrincipalName $User -Force
     Remove-MsolUser -UserPrincipalName $User -RemoveFromRecyclebin -Force
 
@@ -153,7 +156,9 @@ Get-MsolUser -UserPrincipalName $user
     Remove-MsolUser -UserPrincipalName $user -RemoveFromRecyclebin
 
 #Create dynamic distribution list
-	New-DynamicDistributionGroup -Name "Property Management - Nashville" -RecipientFilter {(RecipientType -eq 'UserMailbox') -and (Office -like 'Nashville')}
+
+
+	New-DynamicDistributionGroup -Name "Property Management - Alamonte Springs" -RecipientFilter {(RecipientType -eq 'UserMailbox') -and (Office -like 'Alamonte Springs')}
 
 
 #Get alias list
