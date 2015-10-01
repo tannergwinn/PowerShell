@@ -1,4 +1,4 @@
-﻿## This will remove the "O365_Users" group and
+﻿## This will remove the groups and
 ## remove the licenses / delete the user in O365 
 ## for DISABLED USERS in CAH_MailBox_Backup OU
 
@@ -22,13 +22,10 @@ foreach ($O in $Offboard)
 
     #Get-MsolUser -UserPrincipalName $o.UserPrincipalName 
 
-    #Set-MsolUserLicense -UserPrincipalName $o.UserPrincipalName -RemoveLicenses Colonyamerican:STANDARDPACK |
-
     Remove-MsolUser -UserPrincipalName $o.UserPrincipalName -Force
-
 }
 
-
+#Remove Group Membership from Offboarded Accounts
 
 $users= get-aduser -filter 'enabled -eq $false' -Properties SamAccountName, UserPrincipalName -SearchBase "OU=CAH_MailBox_Backup,DC=colonyah,DC=local"
 
@@ -46,7 +43,4 @@ $userGroups | %{get-adgroup $_ | Remove-ADGroupMember -confirm:$false -member $S
 
 $userGroups = $null
 
-}
-
-
-$users | %{RemoveMemberships $_.SAMAccountName}
+} $users | %{RemoveMemberships $_.SAMAccountName}

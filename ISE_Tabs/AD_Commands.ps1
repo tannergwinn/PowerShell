@@ -101,9 +101,9 @@ Enter-PSSession -ComputerName
 
 #Pull list of users by title
 
-Get-ADUser -Filter {(title -like "Property Manager") -or (title -like "Regional Manager")} -Properties Displayname, mail, title |
-    Select-Object Displayname, mail, title |
-    Export-Csv C:\ScriptsOutput\PM-RM.csv
+Get-ADUser -Filter {(Enabled -eq $true) -and (title -like "Service Technician") -or (title -like "Service Manager") -or(title -like "Field Project Manager") -or (title -like "Leasing Consultant") -or (title -like "service operations manager")} -Properties Displayname, mail, title, physicalDeliveryOfficeName |
+    Select-Object Displayname, mail, title, physicalDeliveryOfficeName |
+    Export-Csv C:\ScriptsOutput\SM-TM-FM-KitchenSink.csv
 
 
 Get-ADGroupMember "CAH_Scottsdale" | Export-csv -path C:\ScriptsOutput\Alias.csv
@@ -124,14 +124,14 @@ Function Get-PSWEXP{
 
  #filter like export results
 
- Get-ADUser -filter {(Title -like "Leasing Consultant") -and (enabled -eq $true)} -Properties * | Select-Object Name, Title, mail | Export-Csv C:\ScriptsOutput\Leasing.csv
+ Get-ADUser -filter {(Title -like "Customer Service Representative") -and (enabled -eq $true)} -Properties * | Select-Object Name, Title, mail | Export-Csv C:\ScriptsOutput\CSR.csv
 #reset password last set -use SAMAccountImport-Module ActiveDirectory$users = Get-ADUser -filter 'enabled -eq $true' -Properties SamAccountName -SearchBase "OU=CRM,DC=colonyah,DC=local" foreach ($user in $users){$TargetUser = $user.SamAccountName$uObj = [ADSI]"LDAP://$TargetUser"$uObj.put("pwdLastSet", 0)$uObj.SetInfo()$uObj.put("pwdLastSet", -1)$uObj.SetInfo()}
 
 #Origional
 
 Import-Module ActiveDirectory
 
-$users = write j.chang #get-content "C:\ScriptsOutput\ExpiredCRM.csv" foreach ($user in $users){Get-ADUser $user | Set-ADAccountControl -PasswordNeverExpires $false$TargetUser = Get-ADUser -Filter {sAMAccountName -eq $user}$uObj = [ADSI]"LDAP://$TargetUser"$uObj.put("pwdLastSet", 0)$uObj.SetInfo()$uObj.put("pwdLastSet", -1)$uObj.SetInfo()}#Get users email address from SAMAccountName$SmartU = Import-Csv "C:\ScriptSources\Smart_Search_Results.csv"
+$users = write t.woods #get-content "C:\ScriptsOutput\ExpiredCRM.csv" foreach ($user in $users){Get-ADUser $user | Set-ADAccountControl -PasswordNeverExpires $false$TargetUser = Get-ADUser -Filter {sAMAccountName -eq $user}$uObj = [ADSI]"LDAP://$TargetUser"$uObj.put("pwdLastSet", 0)$uObj.SetInfo()$uObj.put("pwdLastSet", -1)$uObj.SetInfo()}#Get users email address from SAMAccountName$SmartU = Import-Csv "C:\ScriptSources\Smart_Search_Results.csv"
 
 #Find hidden from GAL
 Get-ADGroup -filter 'msExchHideFromAddressLists -eq $True' | Select-Object Name
@@ -150,10 +150,10 @@ Get-ADComputer -filter {cn -like "PRNT*"} -Properties  LastLogonTimestamp|
 \\dfs01\IT\IT - Public\Printers\prnt02
 
 #Move AD computer
-get-adcomputer A2113980 | Move-ADObject -TargetPath "OU=Scottsdale,OU=CAH_Computers,DC=colonyah,DC=local"
+get-adcomputer A2118886 | Move-ADObject -TargetPath "OU=Lilburn,OU=CAH_Computers,DC=colonyah,DC=local"
 
 #Find some people, get some stuff
-Get-ADUser -filter {(title -like "customer service *") -or (title -like "CSR")} -Properties Displayname, physicalDeliveryOfficeName | Select-Object Displayname, physicalDeliveryOfficeName |Export-Csv C:\Scriptsoutput\CSR.csv
+Get-ADUser -filter {(title -like "Property Manager") -or (title -like "Leasing Manager") -and (enabled -eq $true)} -Properties Displayname, physicalDeliveryOfficeName, title | Select-Object Displayname, physicalDeliveryOfficeName, title |Export-Csv C:\Scriptsoutput\PM_LM.csv
 
 # Bulk add to group
 $users = Get-Content C:\ScriptSources\Atlas2.csv

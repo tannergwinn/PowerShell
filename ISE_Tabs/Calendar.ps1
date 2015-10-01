@@ -2,8 +2,8 @@
 
 ##Calendar permissions-
 
-$Owner =  "Angel Rosario:\Calendar"
-$Requestor = "Terry Piard"
+$Owner =  "Carlos Ginel:\Calendar"
+$Requestor = "Zaleena Ali-Hanel"
 
 add-MailboxFolderPermission -Identity $Owner -User $Requestor -AccessRights PublishingEditor
 
