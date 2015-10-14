@@ -2,10 +2,10 @@
 
 ##Calendar permissions-
 
-$Owner =  "Carlos Ginel:\Calendar"
-$Requestor = "Zaleena Ali-Hanel"
+$Owner =  "Fred Tuomi:\Calendar"
+$Requestor = "Julie McCammond"
 
-add-MailboxFolderPermission -Identity $Owner -User $Requestor -AccessRights PublishingEditor
+add-MailboxFolderPermission -Identity $Owner -User $Requestor -AccessRights Owner
 
 ##Access Levels-
 Owner, PublishingEditor, Editor, PublishingAuthor, Author, NonEditingAuthor, Reviewer, Contributor, AvailabilityOnly, LimitedDetails
@@ -34,3 +34,13 @@ Get-MailboxFolderPermission –Identity ariel.hart@colonyamerican.com:\calendar
 #Attempt at bulk retrieval of Calendar permissions
 
 
+
+#ShowDelegates
+Get-Mailbox "Ryan McBride" | Get-CalendarProcessing | select ResourceDelegates
+
+#GetDelegates
+
+
+
+#Remove all Delegates
+Get-Mailbox -identity "alias" | Set-CalendarProcessing -ResourceDelegates $null

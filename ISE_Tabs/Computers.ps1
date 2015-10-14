@@ -13,3 +13,8 @@ Get-ADComputer -Filter * | Get-WmiObject win_32_bios -ComputerName {$_.Name}
 #Connect via PS
 
 Enter-PSSession -ComputerName 
+
+# Join Domain
+
+
+NETDOM /Domain:Colonyah.local /user:  /password:  MEMBER MYCOMPUTER /JOINDOMAIN

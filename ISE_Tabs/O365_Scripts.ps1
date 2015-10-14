@@ -155,11 +155,6 @@ Get-MsolUser -UserPrincipalName $user
     Remove-MsolUser -UserPrincipalName $user -Force
     Remove-MsolUser -UserPrincipalName $user -RemoveFromRecyclebin
 
-#Create dynamic distribution list
-
-
-	New-DynamicDistributionGroup -Name "Property Management - Alamonte Springs" -RecipientFilter {(RecipientType -eq 'UserMailbox') -and (Office -like 'Alamonte Springs')}
-
 
 #Get alias list
 Get-Mailbox "CAH_Social" | Select-Object Displayname,@{Name=“EmailAddresses”;Expression={$_.EmailAddresses |Where-Object {$_ -LIKE “SMTP:*”}}} | Sort |  Export-Csv C:\ScriptsOutput\SocialEmail.csv

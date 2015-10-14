@@ -20,7 +20,7 @@ Set-Mailbox Leah.granovskaya@colonyamerican.onmicrosoft.com -EmailAddress SMTP:
 
 #List what mailboxes user has access to
 
-get-mailbox | get-mailboxpermission -User "Ariel Hart" | fl identity
+get-mailbox | get-mailboxpermission -User "Melissa Ferris" | fl identity
 
 #With sizes
 get-mailbox | get-mailboxpermission -User "Stephanie Campbell" | Get-MailboxStatistics | FT Displayname, totalitemsize -AutoSize
