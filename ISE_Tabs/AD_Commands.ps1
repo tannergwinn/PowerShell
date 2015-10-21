@@ -125,7 +125,7 @@ Function Get-PSWEXP{
  #filter like export results
 
  Get-ADUser -filter {(Title -like "Customer Service Representative") -and (enabled -eq $true)} -Properties * | Select-Object Name, Title, mail | Export-Csv C:\ScriptsOutput\CSR.csv
-#reset password last set -use SAMAccountImport-Module ActiveDirectory$users = Get-ADUser -filter 'enabled -eq $true' -Properties SamAccountName -SearchBase "OU=CRM,DC=colonyah,DC=local" foreach ($user in $users){$TargetUser = $user.SamAccountName$uObj = [ADSI]"LDAP://$TargetUser"$uObj.put("pwdLastSet", 0)$uObj.SetInfo()$uObj.put("pwdLastSet", -1)$uObj.SetInfo()}
+#reset password last set -use SAMAccount CRMUsersImport-Module ActiveDirectory$users = Get-ADUser -filter 'enabled -eq $true' -Properties SamAccountName -SearchBase "OU=CRM,DC=colonyah,DC=local" foreach ($user in $users){$TargetUser = $user.SamAccountName$uObj = [ADSI]"LDAP://$TargetUser"$uObj.put("pwdLastSet", 0)$uObj.SetInfo()$uObj.put("pwdLastSet", -1)$uObj.SetInfo()}
 
 #Origional
 
@@ -150,7 +150,7 @@ Get-ADComputer -filter {cn -like "PRNT*"} -Properties  LastLogonTimestamp|
 \\dfs01\IT\IT - Public\Printers\prnt02
 
 #Move AD computer
-get-adcomputer A2118886 | Move-ADObject -TargetPath "OU=Lilburn,OU=CAH_Computers,DC=colonyah,DC=local"
+get-adcomputer A2306044 | Move-ADObject -TargetPath "OU=AltamonteSprings,OU=CAH_Computers,DC=colonyah,DC=local"
 
 #Find some people, get some stuff
 Get-ADUser -filter {(title -like "Property Manager") -or (title -like "Leasing Manager") -and (enabled -eq $true)} -Properties Displayname, physicalDeliveryOfficeName, title | Select-Object Displayname, physicalDeliveryOfficeName, title |Export-Csv C:\Scriptsoutput\PM_LM.csv
@@ -164,3 +164,14 @@ foreach ($user in $users)
 Add-ADGroupMember -Identity Atlas -Members $user
 } 
  
+
+#fetch SamAccountName
+Import-Module ActiveDirectory
+$users = Import-Csv #PathToSourceFile
+
+foreach ($user in $users) 
+
+{
+Get-ADUser -filter {(DisplayName -like "$($User.Name)" -and (enabled -eq $true)} -Properties Displayname, SamAccountName, physicalDeliveryOfficeName | Select-Object Displayname, SamAccountName, physicalDeliveryOfficeName |Export-Csv #WhereToSaveData
+}
+

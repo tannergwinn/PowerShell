@@ -7,8 +7,8 @@ $users = Import-Csv -Path C:\ScriptSources\SAMName3.csv
 $output = foreach ($user in $users)
 
 {            
-Get-ADUser -Filter "SamAccountName -eq '$($user.SAMAccountName)'" -Properties * -SearchBase "DC=Colonyah,DC=local" |
-    Set-ADUser -Title "$($user.Title)" -Department "$($user.Department)"
+Get-ADUser -Filter "SamAccountName -eq '$($user.SAMAccountName)'" -Properties * -SearchBase "OU=CAH_Users,DC=Colonyah,DC=local" |
+    Set-ADUser -Title "$($user.Title)" -Department "$($user.Department)" -OfficePhone "$($user.CellNumber)"
 } $output | Out-File C:\ScriptsOutput\errors.txt -append
  
 
