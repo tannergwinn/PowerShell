@@ -1,19 +1,7 @@
 ﻿Break
 
-#Bulk change attributes
 
-Import-Module ActiveDirectory            
-                
-$users = Import-Csv -Path C:\ScriptSources\SAMName224.csv                      
-        
-foreach ($user in $users)
-
-{            
-Get-ADUser -Filter "SamAccountName -eq '$($user.SAMAccountName)'" -Properties Title, Department -SearchBase "OU=CAH_Users,DC=colonyah,DC=local" |
-    Set-ADUser -Title "$($user.Title)" -Department "$($user.Department)" -Office "$($user.Office)" -Manager "$($User.Manager)"  -verbose -PassThru -EA stop
-}
-
-#Change users pswd last set date to today
+#Bulk Change users pswd last set date to today .csv
 
 Import-Module ActiveDirectory
  
@@ -175,3 +163,9 @@ foreach ($user in $users)
 Get-ADUser -filter {(DisplayName -like "$($User.Name)" -and (enabled -eq $true)} -Properties Displayname, SamAccountName, physicalDeliveryOfficeName | Select-Object Displayname, SamAccountName, physicalDeliveryOfficeName |Export-Csv #WhereToSaveData
 }
 
+
+
+#pull employee list
+Get-ADUser -Filter * -Properties Displayname, mail, title, physicalDeliveryOfficeName -SearchBase "OU=CAH_Users,DC=colonyah,DC=local" | 
+    Select-Object Displayname, mail, title, physicalDeliveryOfficeName |
+    Export-Csv C:\ScriptsOutput\EmployeeScrub.csv -Append
