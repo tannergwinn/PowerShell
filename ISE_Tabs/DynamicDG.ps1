@@ -1,7 +1,7 @@
 ﻿
 
 #review Dynamic list Members
-$DDG = Get-DynamicDistributionGroup "Property Management - Riverside"
+$DDG = Get-DynamicDistributionGroup "Service Managers"
 
 Foreach ($dg in $DDG)
 {
@@ -9,11 +9,13 @@ Get-Recipient -RecipientPreviewFilter $DG.RecipientFilter | Select-Object Displa
 }
 
 #Review Filter
-Get-DynamicDistributionGroup PropertyManagement-AltamonteSprings | fl recipientfilter
+Get-DynamicDistributionGroup ServiceManagers@colonyamerican.com | fl recipientfilter
 
 #edit filter- !!! do not forget the "{}" around the filter value !!!
 
 Get-DynamicDistributionGroup PropertyManagement-AltamonteSprings | Set-DynamicDistributionGroup -recipientfilter {<PutFilterHere>}
+
+Get-DynamicDistributionGroup ServiceManagers@colonyamerican.com | Set-DynamicDistributionGroup -recipientfilter {((((RecipientType -eq 'UserMailbox') -and (Title -like 'Service Manager') -or (Title -like 'Service Operations Manager'))) -and (-not(Name -like 'SystemMailbox{*')) -and (-not(Name -like 'CAS_{*')) -and (-not(RecipientTypeDetailsValue -eq 'MailboxPlan')) -and (-not(RecipientTypeDetailsValue -eq 'DiscoveryMailbox')) -and (-not(RecipientTypeDetailsValue -eq 'PublicFolderMailbox')) -and (-not(RecipientTypeDetailsValue -eq 'ArbitrationMailbox')) -and (-not(RecipientTypeDetailsValue -eq 'AuditLogMailbox')))}
 
 
 #Create dynamic distribution list

@@ -2,14 +2,19 @@
 
 #Single user change
 
+#Generate SAM Name in excel =CONCATENATE(LEFT(C2,1)&".", B2)
+
+
 ##Enter SamNames for Manager and Employee - Variables are equal to PS params
 
-$Manager = "W.Campbell"
-$Office = "Lilburn"
-$Title = "CSR - Service"
-$Employee = 'm.williams'
+#$Department = "Technology"
+$Office = "Stockbridge"
+$Manager = "V.Norkum"
+$Title = "Customer Service Representative"
+$Employee = 'T.Quick'
 
-Get-aduser $Employee| Set-ADUser -Manager $Manager -Confirm
+Get-aduser $Employee |
+ Set-ADUser -Manager $Manager -Title $Title -Office $Office -Confirm 
 
 
 

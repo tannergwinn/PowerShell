@@ -16,7 +16,15 @@ $RMUser = "Ariel Hart"
 
 #Set Primary email address
 
-Set-Mailbox Leah.granovskaya@colonyamerican.onmicrosoft.com -EmailAddress SMTP:Leah.granovskaya@colonyamericanfinance.com
+$OldUPN = "P.user01@colonyamericanfinance.com"
+$TempUPN = "p.user01@colonyamerican.onmicrosoft.com"
+$NewUPN = "P.user01@colonystarwood.com"
+
+Set-Mailbox $OldUPN -EmailAddress "SMTP:$TempUPN" | Set-Mailbox $TempUPN -EmailAddress "SMTP:$NewUPN"
+
+#Set UPN
+Set-MsolUserPrincipalName -UserPrincipalName $OldUPN -NewUserPrincipalName $TempUPN | Set-MsolUserPrincipalName -UserPrincipalName $TempUPN -NewUserPrincipalName $NewUPN
+
 
 #List what mailboxes user has access to
 

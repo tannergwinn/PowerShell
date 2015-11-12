@@ -125,12 +125,10 @@ $RMUser = write ariel.hart@colonyamerican.com
 
 Remove-MailboxPermission -Identity $RMBX -User $RMUser -AccessRights FullAccess -InheritanceType All -Confirm:$false
 
-
-
-
 #Set Primary email address
 
 Set-Mailbox Leah.granovskaya@colonyamerican.onmicrosoft.com -EmailAddress SMTP:Leah.granovskaya@colonyamericanfinance.com
+
 
 #Calendar Manipulation
 
@@ -162,7 +160,7 @@ Get-Mailbox "CAH_Social" | Select-Object Displayname,@{Name=“EmailAddresses”
 
 #Get Group objectID
 
-Get-MsolGroup -SearchString "CAH Scottsdale"
+Get-MsolGroup -SearchString "human"
 
 #pull info on group -need group ID see above
 
@@ -170,7 +168,7 @@ Get-MsolGroupMember -groupObjectid 'b5a0ef9b-ebe6-41e9-8df5-8d8446b5039d' | Sele
 
 #remove MSOLGroup
 
-Remove-MsolGroup -ObjectId '' -Force
+Remove-MsolGroup -ObjectId '1b93a62a-101e-4117-8fce-a632ded1b300' -Force
 
 #Dynamic email Groups
 
@@ -256,3 +254,12 @@ Get-MailboxFolderPermission –Identity keshia.king@colonyamerican.com:\Calendar
 #Add user to multiple distribution lists
 
 $Array = "DL 01","DL 03","DL 03" ForEach ($item in $Array) { Add-DistributionGroupMember -Identity $item –Member John –BypassSecurityGroupManagerCheck }
+
+
+
+
+
+##Change Groups Manager
+Remove-DistributionGroup <NameofGroup> -BypassSecurityGroupManagerCheck
+
+Set-DistributionGroup Tenant_Sysadmins -ManagedBy Ariel.hart@colonyamerican.com -BypassSecurityGroupManagerCheck
