@@ -15,10 +15,10 @@ connect-msolservice -credential $msolcred
 
 #Removing single users from O365 (license already removed)
 
-$User = "Nic.Walling@colonyamericanfinance.com"
-    #Get-MsolUser -UserPrincipalName $User
-    #Set-MsolUserLicense -UserPrincipalName $user -RemoveLicenses Colonyamerican:STANDARDPACK
-    #Remove-MsolUser -UserPrincipalName $User -Force
+$User = "Melissa.Peterson@colonyamerican.com"
+    Get-MsolUser -UserPrincipalName $User
+    Set-MsolUserLicense -UserPrincipalName $user -RemoveLicenses Colonyamerican:StandardPACK
+    Remove-MsolUser -UserPrincipalName $User -Force
     Remove-MsolUser -UserPrincipalName $User -RemoveFromRecyclebin -Force
 
 #Batch remove licesnses and users from O365 (Uses email address)
@@ -62,7 +62,7 @@ $AccountSku[2].AccountSkuId
 $AccountSku[3].AccountSkuId
 $AccountSku[4].AccountSkuId
 $AccountSku[5].AccountSkuId
-
+$AccountSku[6].AccountSkuId
 
 #For Each user loop to pull license data
 $licensedetails = (Get-MsolUser -UserPrincipalName `
@@ -127,7 +127,7 @@ Remove-MailboxPermission -Identity $RMBX -User $RMUser -AccessRights FullAccess 
 
 #Set Primary email address
 
-Set-Mailbox Leah.granovskaya@colonyamerican.onmicrosoft.com -EmailAddress SMTP:Leah.granovskaya@colonyamericanfinance.com
+Set-Mailbox carlos.quintanilla@colonyamerican.onmicrosoft.com -EmailAddress SMTP:carlos.quintanilla@colonyamerican.com
 
 
 #Calendar Manipulation
@@ -183,7 +183,7 @@ Get-Recipient -RecipientPreviewFilter $DDG.RecipientFilter | FT DisplayName
 
 
 #Display group members
-Get-DistributionGroupMember "CAH Scottsdale" | measure
+Get-DistributionGroupMember "CAH Scottsdale" |Select-Object Name #| measure
 
 #bulk add users to group 
 

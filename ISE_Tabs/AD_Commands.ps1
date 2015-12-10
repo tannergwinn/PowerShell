@@ -94,7 +94,7 @@ Get-ADUser -Filter {(Enabled -eq $true) -and (title -like "Service Technician") 
     Export-Csv C:\ScriptsOutput\SM-TM-FM-KitchenSink.csv
 
 
-Get-ADGroupMember "CAH_Scottsdale" | Export-csv -path C:\ScriptsOutput\Alias.csv
+Get-ADGroupMember "CAH-Managers" | Export-csv -path C:\ScriptsOutput\CAHMAnagerAD.csv
 
 #Look up expired password
 
@@ -138,7 +138,7 @@ Get-ADComputer -filter {cn -like "PRNT*"} -Properties  LastLogonTimestamp|
 \\dfs01\IT\IT - Public\Printers\prnt02
 
 #Move AD computer
-get-adcomputer A2306044 | Move-ADObject -TargetPath "OU=AltamonteSprings,OU=CAH_Computers,DC=colonyah,DC=local"
+get-adcomputer A1981591 | Move-ADObject -TargetPath "OU=LasVegas,OU=CAH_Computers,DC=colonyah,DC=local"
 
 #Find some people, get some stuff
 Get-ADUser -filter {(title -like "Property Manager") -or (title -like "Leasing Manager") -and (enabled -eq $true)} -Properties Displayname, physicalDeliveryOfficeName, title | Select-Object Displayname, physicalDeliveryOfficeName, title |Export-Csv C:\Scriptsoutput\PM_LM.csv
@@ -169,3 +169,29 @@ Get-ADUser -filter {(DisplayName -like "$($User.Name)" -and (enabled -eq $true)}
 Get-ADUser -Filter * -Properties Displayname, mail, title, physicalDeliveryOfficeName -SearchBase "OU=CAH_Users,DC=colonyah,DC=local" | 
     Select-Object Displayname, mail, title, physicalDeliveryOfficeName |
     Export-Csv C:\ScriptsOutput\EmployeeScrub.csv -Append
+
+
+
+#bulk import users to AD
+$Users = Import-Csv -Path "C:\users\a.hart\Desktop\WaypointUsers.csv" 
+           
+foreach ($User in $Users)            
+{            
+    $Displayname = $User.'GivenName' + " " + $User.'SurName'            
+    $UserFirstname = $User.'GivenName'            
+    $UserLastname = $User.'SurName'            
+    $OU = $User.'OU'            
+    $SAM = $User.'SAM'            
+    $UPN = $User.'SAM' + "@"  + "colonystarwood.com"            
+    $Email = $User.'SAM' + "@" + "colonystarwood.com"
+    $Department = $User.'Department'
+    $Title = $user.'Title'       
+    $Password = $User.'Password' 
+    $Comapany = "Colony Starwood Homes"
+    $Phone = $user.'OfficePhone'  
+    $office = $user.'Office'
+             
+    New-ADUser -Name "$Displayname" -DisplayName "$Displayname" -SamAccountName $SAM -UserPrincipalName $UPN -GivenName "$UserFirstname" -Surname "$UserLastname" -EmailAddress "$Email" -Department "$Department" -Title "$Title" -Company "$Company" -OfficePhone "$Phone" -Office "$Office" -AccountPassword (ConvertTo-SecureString $Password -AsPlainText -Force) -Enabled $true -Path "$OU" -ChangePasswordAtLogon $true –PasswordNeverExpires $false         
+   
+} 
+

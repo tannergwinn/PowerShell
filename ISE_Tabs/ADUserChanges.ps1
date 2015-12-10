@@ -5,17 +5,19 @@
 #Generate SAM Name in excel =CONCATENATE(LEFT(C2,1)&".", B2)
 
 
-##Enter SamNames for Manager and Employee - Variables are equal to PS params
+##Enter SamNames for Manager and Employee - Variables are equal to  #comments
 
-#$Department = "Technology"
-$Office = "Stockbridge"
-$Manager = "V.Norkum"
-$Title = "Customer Service Representative"
-$Employee = 'T.Quick'
+$D = "Acquisitions" #Department
+$O = "Stockbridge" #Office
+$M = "j.dupuis" #Manager
+$T = "Sr. Project Manager" #Title
+$E = 'd.dahl' #Employee
 
-Get-aduser $Employee |
- Set-ADUser -Manager $Manager -Title $Title -Office $Office -Confirm 
+Get-aduser $E |
+ Set-ADUser -Manager $M -Title $T -Confirm 
 
+ -Department $D
+ -Office $O 
 
 
 #Bulk change users attributes - SAMAccountname required

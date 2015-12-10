@@ -17,8 +17,8 @@ $RMUser = "Ariel Hart"
 #Set Primary email address
 
 $OldUPN = "P.user01@colonyamericanfinance.com"
-$TempUPN = "p.user01@colonyamerican.onmicrosoft.com"
-$NewUPN = "P.user01@colonystarwood.com"
+$TempUPN = "Melissa.Harwell@colonyamerican.onmicrosoft.com"
+$NewUPN = "Melissa.Harwell@colonyamerican.com"
 
 Set-Mailbox $OldUPN -EmailAddress "SMTP:$TempUPN" | Set-Mailbox $TempUPN -EmailAddress "SMTP:$NewUPN"
 
@@ -33,10 +33,28 @@ get-mailbox | get-mailboxpermission -User "Melissa Ferris" | fl identity
 #With sizes
 get-mailbox | get-mailboxpermission -User "Stephanie Campbell" | Get-MailboxStatistics | FT Displayname, totalitemsize -AutoSize
 
-# Bulk add users to mail group
+# Bulk add users to Distribution group
 $AMembers = "Victoria Greene",	"Terry Piard",	"Nicole Donowick"
 
 foreach ($AMember in $Amembers)
 {
 Add-DistributionGroupMember "Property Management – HOA Distribution List" -Member $AMember -BypassSecurityGroupManagerCheck
 }
+
+
+#Bulk add users to Mailbox
+
+$smbUs = Import-csv C:\ScriptSources\HR.CSV
+
+foreach ($smbU in $smbUs)
+
+{Get-Mailbox HR@colonystarwood.com |
+    Add-MailboxPermission -User $smbU.userprincipalname -AccessRights FullAccess -InheritanceType All |
+    Add-RecipientPermission -AccessRights SendAs -Trustee $smbU.userprincipalname -Confirm:$false
+    }
+
+
+
+#mailbox quota
+
+Get-mailbox insurance@colonyamerican.com | Set-Mailbox -ProhibitSendReceiveQuota 10GB -ProhibitSendQuota 9.75GB -IssueWarningQuota 9.5GB

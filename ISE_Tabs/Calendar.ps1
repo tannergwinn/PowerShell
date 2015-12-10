@@ -2,8 +2,8 @@
 
 ##Calendar permissions-
 
-$Owner =  "Dustin Kuntz:\Calendar"
-$Requestor = "Jacqueline spiller"
+$Owner =  "justin Iannacone:\Calendar"
+$Requestor = "Julie.McCammond@colonyamerican.com"
 
 add-MailboxFolderPermission -Identity $Owner -User $Requestor -AccessRights Owner
 
@@ -11,6 +11,7 @@ add-MailboxFolderPermission -Identity $Owner -User $Requestor -AccessRights Owne
 Owner, PublishingEditor, Editor, PublishingAuthor, Author, NonEditingAuthor, Reviewer, Contributor, AvailabilityOnly, LimitedDetails
 
 Remove-MailboxFolderPermission -Identity $Owner -user $Requestor
+
 
 ##View Permissions-
 Get-MailboxFolderPermission –Identity $Owner

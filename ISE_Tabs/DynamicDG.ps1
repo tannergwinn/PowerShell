@@ -1,11 +1,11 @@
 ﻿
 
 #review Dynamic list Members
-$DDG = Get-DynamicDistributionGroup "Service Managers"
+$DDG = Get-DynamicDistributionGroup "CAH-ALL"
 
 Foreach ($dg in $DDG)
 {
-Get-Recipient -RecipientPreviewFilter $DG.RecipientFilter | Select-Object DisplayName, @{Name=“DDG.Name”;Expression={$dg.Name}} #| Export-csv C:\ScriptsOutput\DDG.csv -append -force
+Get-Recipient -RecipientPreviewFilter $DG.RecipientFilter | Select-Object DisplayName, @{Name=“DDG.Name”;Expression={$dg.Name}} | Export-csv C:\ScriptsOutput\CAH_DDG.csv -append -force
 }
 
 #Review Filter
