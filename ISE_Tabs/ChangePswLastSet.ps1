@@ -1,6 +1,6 @@
 Import-Module ActiveDirectory
  
-$users = Get-ADUser -filter 'enabled -eq $true' -Properties SamAccountName -SearchBase "OU=CRM,DC=colonyah,DC=local"  #import-csv "c:\Scriptsources\CRMusers.csv"
+$users = Get-ADUser -filter 'enabled -eq $true' -Properties SamAccountName -SearchBase "OU=CAF_Users,DC=colonyah,DC=local"  #import-csv "c:\Scriptsources\CRMusers.csv"
 
 foreach ($user in $users)
 

@@ -15,11 +15,11 @@ connect-msolservice -credential $msolcred
 
 #Removing single users from O365 (license already removed)
 
-$User = "Melissa.Peterson@colonyamerican.com"
+$User = "test.user@colonyamerican.com"
     Get-MsolUser -UserPrincipalName $User
-    Set-MsolUserLicense -UserPrincipalName $user -RemoveLicenses Colonyamerican:StandardPACK
+    #Set-MsolUserLicense -UserPrincipalName $user -RemoveLicenses Colonyamerican:StandardPACK, Colonyamerican:CRMSTANDARD
     Remove-MsolUser -UserPrincipalName $User -Force
-    Remove-MsolUser -UserPrincipalName $User -RemoveFromRecyclebin -Force
+    #Remove-MsolUser -UserPrincipalName $User -RemoveFromRecyclebin -Force
 
 #Batch remove licesnses and users from O365 (Uses email address)
 
@@ -81,6 +81,30 @@ if ($licensedetails.Count -gt 0){
 Get-MsolUser -All | 
 Select-Object UserPrincipalName, DisplayName, isLicensed |
     Export-Csv C:\Temp\UnlicensesedToRemove.csv
+
+#pull Licenses applied to user
+
+Get-MsolUser -all |Where {$_.IsLicensesed -eq $true} | Select-Object Displayname, @{n="Licenses Type";e={$_.Licenses.AccountSkuid}}, UserPrincipalname | #Export-Csv C:\Temp\E1ToRemove.csv
+
+
+$lines = @()
+foreach($msolUser in (Get-MSOLUser))
+{
+    $UserInfo = Get-MSOLUser -UserPrincipalName $msolUser.UserPrincipalName
+    foreach($license in $msolUser.Licenses)
+    {
+        $lines += New-Object PsObject -Property @{
+                    "Username"="$($UserInfo.DisplayName)";
+                    "Company"="$($UserInfo.Company)";
+                    "AccountSKUID"="$($license.AccountSKUid)"
+                  }
+    }
+}
+$lines | Export-CSV C:\temp\E1ToRemove.csv
+
+
+
+#User Licensing 
 
   $userLicenseTest = Get-MsolUser `
   -UserPrincipalName "Aiden.Hong@colonyamerican.com"
@@ -160,7 +184,7 @@ Get-Mailbox "CAH_Social" | Select-Object Displayname,@{Name=“EmailAddresses”
 
 #Get Group objectID
 
-Get-MsolGroup -SearchString "human"
+Get-MsolGroup -SearchString "CAH maintenance"
 
 #pull info on group -need group ID see above
 
@@ -263,3 +287,10 @@ $Array = "DL 01","DL 03","DL 03" ForEach ($item in $Array) { Add-DistributionGro
 Remove-DistributionGroup <NameofGroup> -BypassSecurityGroupManagerCheck
 
 Set-DistributionGroup Tenant_Sysadmins -ManagedBy Ariel.hart@colonyamerican.com -BypassSecurityGroupManagerCheck
+
+Set-MsolUserPrincipalName -ObjectId aa014588-4100-4199-934c-43fb3e2998ca -NewUserPrincipalName CAHMaintenance@Colonyamerican.com
+
+#Remove from Recyle 
+
+
+Get-MsolUser -all -ReturnDeletedUsers | Remove-MsolUser -RemoveFromRecycleBin -Force

@@ -16,14 +16,18 @@ $RMUser = "Ariel Hart"
 
 #Set Primary email address
 
-$OldUPN = "P.user01@colonyamericanfinance.com"
-$TempUPN = "Melissa.Harwell@colonyamerican.onmicrosoft.com"
-$NewUPN = "Melissa.Harwell@colonyamerican.com"
+$Ename = "daniel.geri"
+$OldUPN = "$Ename@colonyamerican.com"
+$TempUPN = "$Ename@colonyamerican.onmicrosoft.com"
+$NewUPN = "$ename@colonystarwood.com"
 
-Set-Mailbox $OldUPN -EmailAddress "SMTP:$TempUPN" | Set-Mailbox $TempUPN -EmailAddress "SMTP:$NewUPN"
+Set-Mailbox $OldUPN -EmailAddress "SMTP:$TempUPN"
+Set-Mailbox $TempUPN -EmailAddress "SMTP:$NewUPN"
 
 #Set UPN
-Set-MsolUserPrincipalName -UserPrincipalName $OldUPN -NewUserPrincipalName $TempUPN | Set-MsolUserPrincipalName -UserPrincipalName $TempUPN -NewUserPrincipalName $NewUPN
+Set-MsolUserPrincipalName -UserPrincipalName "$OldUPN" -NewUserPrincipalName $TempUPN 
+
+Set-MsolUserPrincipalName -UserPrincipalName $TempUPN -NewUserPrincipalName $NewUPN
 
 
 #List what mailboxes user has access to
@@ -58,3 +62,14 @@ foreach ($smbU in $smbUs)
 #mailbox quota
 
 Get-mailbox insurance@colonyamerican.com | Set-Mailbox -ProhibitSendReceiveQuota 10GB -ProhibitSendQuota 9.75GB -IssueWarningQuota 9.5GB
+
+
+#list the mailboxes with Properties
+Get-Mailbox -ResultSize Unlimited | Select-Object PrimarySmtpAddress, WhenCreated, RecipientTypeDetails | Export-csv C:\ScriptsOutput\MailboxesAll.csv
+
+
+#Remove Mailboxes
+
+Get-Mailbox freddiemac@vineyardservices.com | Remove-Mailbox 
+
+Set-Mailbox CAHMaintenance@Colonyamerican.onmicrosoft.com -Emailaddress CAHMaintenance@Colonyamerican.com

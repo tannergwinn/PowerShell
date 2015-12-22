@@ -44,3 +44,7 @@ $userGroups | %{get-adgroup $_ | Remove-ADGroupMember -confirm:$false -member $S
 $userGroups = $null
 
 } $users | %{RemoveMemberships $_.SAMAccountName}
+
+
+
+

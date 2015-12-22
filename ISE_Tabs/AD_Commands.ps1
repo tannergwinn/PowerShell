@@ -113,9 +113,9 @@ Function Get-PSWEXP{
  #filter like export results
 
  Get-ADUser -filter {(Title -like "Customer Service Representative") -and (enabled -eq $true)} -Properties * | Select-Object Name, Title, mail | Export-Csv C:\ScriptsOutput\CSR.csv
-#reset password last set -use SAMAccount CRMUsersImport-Module ActiveDirectory$users = Get-ADUser -filter 'enabled -eq $true' -Properties SamAccountName -SearchBase "OU=CRM,DC=colonyah,DC=local" foreach ($user in $users){$TargetUser = $user.SamAccountName$uObj = [ADSI]"LDAP://$TargetUser"$uObj.put("pwdLastSet", 0)$uObj.SetInfo()$uObj.put("pwdLastSet", -1)$uObj.SetInfo()}
+#reset password last set -use SAMAccountImport-Module ActiveDirectory$users = Get-ADUser -filter 'enabled -eq $true' -Properties SamAccountName -SearchBase "OU=CAF_Users,DC=colonyah,DC=local" foreach ($user in $users){$TargetUser = $user.SamAccountName$uObj = [ADSI]"LDAP://$TargetUser"$uObj.put("pwdLastSet", 0)$uObj.SetInfo()$uObj.put("pwdLastSet", -1)$uObj.SetInfo()}
 
-#Origional
+#Origional Change password last set date
 
 Import-Module ActiveDirectory
 
@@ -195,3 +195,36 @@ foreach ($User in $Users)
    
 } 
 
+#Set them Passwords
+
+#bulk import users to AD
+$Users = Import-Csv -Path "C:\scriptsources\SwayImport2.csv" 
+           
+foreach ($User in $Users)            
+{  
+
+ $SAM = $User.'SAM'
+ $Password = $User.'Password'
+
+
+Get-aduser $Sam  | Set-ADAccountPassword -newpassword (ConvertTo-SecureString "$Password" -AsPlainText -Force) -Reset -PassThru | Enable-ADAccount
+Write-host "AD Password has been reset for:"$SAM
+}
+
+
+
+$Users = Import-Csv -Path C:\scriptsoutput\failusers.csv
+
+foreach ($User in $Users)  
+
+{
+
+$SAM = $User.SamAccountName
+
+Get-ADUser $SAM | Move-ADObject -TargetPath 'OU=FailedUsers,OU=UserImport,OU=CAH_Users,DC=colonyah,DC=local'
+
+}
+
+
+#Add Proxy Address
+set-aduser Daniel.Geri -Add @{ProxyAddresses="SMTP:Daniel.Geri@colonystarwood.com"}
