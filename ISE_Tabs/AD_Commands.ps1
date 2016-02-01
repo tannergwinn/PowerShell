@@ -93,7 +93,7 @@ Get-ADUser -Filter {(Enabled -eq $true) -and (title -like "Service Technician") 
     Select-Object Displayname, mail, title, physicalDeliveryOfficeName |
     Export-Csv C:\ScriptsOutput\SM-TM-FM-KitchenSink.csv
 
-
+#Pull list of users in group
 Get-ADGroupMember "CAH-Managers" | Export-csv -path C:\ScriptsOutput\CAHMAnagerAD.csv
 
 #Look up expired password
@@ -144,12 +144,13 @@ get-adcomputer A1981591 | Move-ADObject -TargetPath "OU=LasVegas,OU=CAH_Computer
 Get-ADUser -filter {(title -like "Property Manager") -or (title -like "Leasing Manager") -and (enabled -eq $true)} -Properties Displayname, physicalDeliveryOfficeName, title | Select-Object Displayname, physicalDeliveryOfficeName, title |Export-Csv C:\Scriptsoutput\PM_LM.csv
 
 # Bulk add to group
-$users = Get-Content C:\ScriptSources\Atlas2.csv
+$users = Get-ADUser -Filter * -Properties * -SearchBase "OU=CAH_Users,DC=colonyah,DC=local"
 
 foreach ($user in $users) 
 
 {
-Add-ADGroupMember -Identity Atlas -Members $user
+Add-ADGroupMember -Identity "Colony American Drive" -Members $user
+Add-ADGroupMember -Identity "VPN Access" -Members $user
 } 
  
 
@@ -227,4 +228,17 @@ Get-ADUser $SAM | Move-ADObject -TargetPath 'OU=FailedUsers,OU=UserImport,OU=CAH
 
 
 #Add Proxy Address
-set-aduser Daniel.Geri -Add @{ProxyAddresses="SMTP:Daniel.Geri@colonystarwood.com"}
+set-aduser Finn.Rey -Add @{ProxyAddresses="smtp:Finn.Rey@colonyamerican.com"}
+
+
+get-aduser -Filter * -Properties Displayname, Proxyaddresses -SearchBase 'OU=CAH_Users,DC=colonyah,DC=local'
+
+
+
+Get-ADUser -Filter * -SearchBase 'OU=CAH_Users,DC=colonyah,DC=local' -Properties proxyaddresses |
+
+select name, @{L='ProxyAddress_1'; E={$_.proxyaddresses[0]}},
+
+@{L='ProxyAddress_2';E={$_.ProxyAddresses[1]}}, @{L='ProxyAddress_3';E={$_.ProxyAddresses[2]}}, @{L='ProxyAddress_4';E={$_.ProxyAddresses[3]}}|
+
+Export-Csv -Path C:\ScriptsOutput\Proxies0106.csv

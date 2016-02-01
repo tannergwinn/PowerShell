@@ -16,13 +16,12 @@ $RMUser = "Ariel Hart"
 
 #Set Primary email address
 
-$Ename = "daniel.geri"
+$Ename = "Dana.smith"
 $OldUPN = "$Ename@colonyamerican.com"
 $TempUPN = "$Ename@colonyamerican.onmicrosoft.com"
 $NewUPN = "$ename@colonystarwood.com"
 
-Set-Mailbox $OldUPN -EmailAddress "SMTP:$TempUPN"
-Set-Mailbox $TempUPN -EmailAddress "SMTP:$NewUPN"
+Set-Mailbox $OldUPN -EmailAddress "SMTP:$TempUMP" | Set-Mailbox $TempUPN -EmailAddress "SMTP:$NewUPN"
 
 #Set UPN
 Set-MsolUserPrincipalName -UserPrincipalName "$OldUPN" -NewUserPrincipalName $TempUPN 
@@ -30,12 +29,19 @@ Set-MsolUserPrincipalName -UserPrincipalName "$OldUPN" -NewUserPrincipalName $Te
 Set-MsolUserPrincipalName -UserPrincipalName $TempUPN -NewUserPrincipalName $NewUPN
 
 
+Set-MsolUserPrincipalName -UserPrincipalName danas@colonystarwood.com -NewUserPrincipalName Danas@colonyamerican.onmicrosoft.com
+
+
+
 #List what mailboxes user has access to
 
-get-mailbox | get-mailboxpermission -User "Melissa Ferris" | fl identity
+get-mailbox | get-mailboxpermission -User "Jessyca Montas" | fl identity
 
 #With sizes
 get-mailbox | get-mailboxpermission -User "Stephanie Campbell" | Get-MailboxStatistics | FT Displayname, totalitemsize -AutoSize
+
+#list members of shared Mailbox
+
 
 # Bulk add users to Distribution group
 $AMembers = "Victoria Greene",	"Terry Piard",	"Nicole Donowick"
@@ -48,13 +54,14 @@ Add-DistributionGroupMember "Property Management – HOA Distribution List" -Mem
 
 #Bulk add users to Mailbox
 
-$smbUs = Import-csv C:\ScriptSources\HR.CSV
+$smbUs = "Kris Norden"			
+
 
 foreach ($smbU in $smbUs)
 
-{Get-Mailbox HR@colonystarwood.com |
-    Add-MailboxPermission -User $smbU.userprincipalname -AccessRights FullAccess -InheritanceType All |
-    Add-RecipientPermission -AccessRights SendAs -Trustee $smbU.userprincipalname -Confirm:$false
+{Get-Mailbox Tucsonleasing@colonystarwood.com |
+    Add-MailboxPermission -User $smbU -AccessRights FullAccess -InheritanceType All |
+    Add-RecipientPermission -AccessRights SendAs -Trustee $smbU -Confirm:$false
     }
 
 
@@ -65,7 +72,7 @@ Get-mailbox insurance@colonyamerican.com | Set-Mailbox -ProhibitSendReceiveQuota
 
 
 #list the mailboxes with Properties
-Get-Mailbox -ResultSize Unlimited | Select-Object PrimarySmtpAddress, WhenCreated, RecipientTypeDetails | Export-csv C:\ScriptsOutput\MailboxesAll.csv
+Get-Mailbox -ResultSize Unlimited | Select-Object samaccountname, PrimarySmtpAddress, WhenCreated, RecipientTypeDetails | Export-csv C:\ScriptsOutput\MailboxesAll0106.csv
 
 
 #Remove Mailboxes

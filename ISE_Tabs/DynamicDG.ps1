@@ -1,27 +1,34 @@
 ﻿
 
 #review Dynamic list Members
-$DDG = Get-DynamicDistributionGroup "CAH-ALL"
+$DDG = Get-DynamicDistributionGroup "CSH-ALL"
 
 Foreach ($dg in $DDG)
 {
-Get-Recipient -RecipientPreviewFilter $DG.RecipientFilter | Select-Object DisplayName, @{Name=“DDG.Name”;Expression={$dg.Name}} | Export-csv C:\ScriptsOutput\CAH_DDG.csv -append -force
+Get-Recipient -RecipientPreviewFilter $DG.RecipientFilter -ResultSize "Unlimited" | Select-Object DisplayName, @{Name=“DDG.Name”;Expression={$dg.Name}} | Export-csv C:\ScriptsOutput\CSH_DDG.csv -append -force
 }
 
+#Pull members of single list
+
+$DG = Get-DynamicDistributionGroup "Property Management - Chicago"
+
+Get-Recipient -RecipientPreviewFilter $DG.RecipientFilter | Select-Object DisplayName, @{Name=“DDG.Name”;Expression={$dg.Name}}
+
 #Review Filter
-Get-DynamicDistributionGroup ServiceManagers@colonyamerican.com | fl recipientfilter
+Get-DynamicDistributionGroup "CSH-ALL" | fl recipientfilter
 
 #edit filter- !!! do not forget the "{}" around the filter value !!!
 
 Get-DynamicDistributionGroup PropertyManagement-AltamonteSprings | Set-DynamicDistributionGroup -recipientfilter {<PutFilterHere>}
 
-Get-DynamicDistributionGroup ServiceManagers@colonyamerican.com | Set-DynamicDistributionGroup -recipientfilter {((((RecipientType -eq 'UserMailbox') -and (Title -like 'Service Manager') -or (Title -like 'Service Operations Manager'))) -and (-not(Name -like 'SystemMailbox{*')) -and (-not(Name -like 'CAS_{*')) -and (-not(RecipientTypeDetailsValue -eq 'MailboxPlan')) -and (-not(RecipientTypeDetailsValue -eq 'DiscoveryMailbox')) -and (-not(RecipientTypeDetailsValue -eq 'PublicFolderMailbox')) -and (-not(RecipientTypeDetailsValue -eq 'ArbitrationMailbox')) -and (-not(RecipientTypeDetailsValue -eq 'AuditLogMailbox')))}
+Get-DynamicDistributionGroup "CSH-ALL" | Set-DynamicDistributionGroup -recipientfilter {(RecipientTypedetails -eq 'UserMailbox') -and (-not(Company -like 'Colony American Finance*'))}
 
 
 #Create dynamic distribution list
 
-New-DynamicDistributionGroup -Name "Property Management - Alamonte Springs" -RecipientFilter {(RecipientType -eq 'UserMailbox') -and (Office -like 'Alamonte Springs')}
+New-DynamicDistributionGroup -Name "Property Management - Chicago" -RecipientFilter {(RecipientType -eq 'UserMailbox') -and (Office -like 'Chicago')}
 
+New-DynamicDistributionGroup -Name "Accounting - All" -RecipientFilter {(RecipientType -eq 'UserMailbox') -and (Department -like 'Accounting')}
 
 
 @{Name=“EmailAddresses”;Expression={$_.EmailAddresses |Where-Object {$_ -LIKE “SMTP:*”}}}
