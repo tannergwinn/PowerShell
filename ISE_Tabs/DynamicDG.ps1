@@ -26,7 +26,7 @@ Get-DynamicDistributionGroup "CSH-ALL" | Set-DynamicDistributionGroup -recipient
 
 #Create dynamic distribution list
 
-New-DynamicDistributionGroup -Name "Property Management - Chicago" -RecipientFilter {(RecipientType -eq 'UserMailbox') -and (Office -like 'Chicago')}
+New-DynamicDistributionGroup -Name "Property Administrators" -RecipientFilter {(RecipientType -eq 'UserMailbox') -and (Title -like 'Property Administrator')}
 
 New-DynamicDistributionGroup -Name "Accounting - All" -RecipientFilter {(RecipientType -eq 'UserMailbox') -and (Department -like 'Accounting')}
 

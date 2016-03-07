@@ -16,7 +16,7 @@ $RMUser = "Ariel Hart"
 
 #Set Primary email address
 
-$Ename = "Dana.smith"
+$Ename = "david.lee"
 $OldUPN = "$Ename@colonyamerican.com"
 $TempUPN = "$Ename@colonyamerican.onmicrosoft.com"
 $NewUPN = "$ename@colonystarwood.com"
@@ -80,3 +80,6 @@ Get-Mailbox -ResultSize Unlimited | Select-Object samaccountname, PrimarySmtpAdd
 Get-Mailbox freddiemac@vineyardservices.com | Remove-Mailbox 
 
 Set-Mailbox CAHMaintenance@Colonyamerican.onmicrosoft.com -Emailaddress CAHMaintenance@Colonyamerican.com
+
+#Clutter
+Get-mailbox -ResultSize Unlimited | Set-Clutter -Enable $false

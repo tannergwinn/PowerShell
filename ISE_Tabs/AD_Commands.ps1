@@ -242,3 +242,23 @@ select name, @{L='ProxyAddress_1'; E={$_.proxyaddresses[0]}},
 @{L='ProxyAddress_2';E={$_.ProxyAddresses[1]}}, @{L='ProxyAddress_3';E={$_.ProxyAddresses[2]}}, @{L='ProxyAddress_4';E={$_.ProxyAddresses[3]}}|
 
 Export-Csv -Path C:\ScriptsOutput\Proxies0106.csv
+
+
+#Bulk Offboard
+
+$Users = Import-Csv -Path C:\ScriptSources\UserRecords0215.csv
+           
+foreach ($User in $Users)            
+{  
+
+ $SAM = $User.'SAM'
+ $Password = $User.'Password'
+
+
+Get-ADUser $SAM | Move-ADObject -TargetPath "OU=CAH_MailBox_Backup,DC=colonyah,DC=local"
+Get-aduser $Sam  | Set-ADAccountPassword -newpassword (ConvertTo-SecureString "$Password" -AsPlainText -Force) -Reset -PassThru
+Write-host "User Turned Down:"$SAM
+}
+
+#UserList
+Get-ADUser -Filter * -Properties Displayname, Title, Office, Department, Manager, telephoneNumber, StreetAddress, MobilePhone, EmployeeID, Userprincipalname -SearchBase "OU=CAH_Users,DC=colonyah,DC=local" |Select-Object Displayname, Title, Office, Department, Manager, telephoneNumber, MobilePhone, EmployeeID, Userprincipalname |Export-Csv C:\ScriptsOutput\AD_Pull_0301.csv

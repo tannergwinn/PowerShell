@@ -1,7 +1,9 @@
-﻿cd Z:\Storage\Scripts\"ISE Tabs"
+﻿cd Z:\Storage\Scripts\Powershell\ISE_Tabs
 
 . .\Get-LastLogon.ps1
 
-$Computers = Get-Content "C:\ScriptSources\Computers.txt"
+Get-ADComputer -filter * -Properties Name -SearchBase "OU=CAH_Computers,DC=colonyah,DC=local" |Select-Object Name |Export-csv C:\Scriptsources\computers.csv
 
-Get-LastLogon -ComputerName $Computers | out-file "C:\ScriptsOutput\Computers.txt"
+$Computers = import-csv "C:\ScriptSources\Computers.csv"
+
+Get-LastLogon -ComputerName $Computers #| Export-csv "C:\ScriptsOutput\Computers.csv" -append
