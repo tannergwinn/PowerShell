@@ -261,4 +261,4 @@ Write-host "User Turned Down:"$SAM
 }
 
 #UserList
-Get-ADUser -Filter * -Properties Displayname, Title, Office, Department, Manager, telephoneNumber, StreetAddress, MobilePhone, EmployeeID, Userprincipalname -SearchBase "OU=CAH_Users,DC=colonyah,DC=local" |Select-Object Displayname, Title, Office, Department, Manager, telephoneNumber, MobilePhone, EmployeeID, Userprincipalname |Export-Csv C:\ScriptsOutput\AD_Pull_0301.csv
+Get-ADUser -Filter * -Properties Displayname, Title, Office, Department, Manager, telephoneNumber, StreetAddress, MobilePhone, EmployeeID, Userprincipalname -SearchBase "OU=CAH_Users,DC=colonyah,DC=local" |Select-Object Displayname, Title, Office, Department, telephoneNumber, MobilePhone, EmployeeID, Manager, Userprincipalname | Export-Csv C:\ScriptsOutput\AD_Pull_0311.csv

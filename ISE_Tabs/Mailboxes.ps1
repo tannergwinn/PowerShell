@@ -82,4 +82,4 @@ Get-Mailbox freddiemac@vineyardservices.com | Remove-Mailbox
 Set-Mailbox CAHMaintenance@Colonyamerican.onmicrosoft.com -Emailaddress CAHMaintenance@Colonyamerican.com
 
 #Clutter
-Get-mailbox -ResultSize Unlimited | Set-Clutter -Enable $false
+Get-mailbox -RecipientTypeDetails UserMailbox -ResultSize Unlimited | Set-Clutter -Enable $false
