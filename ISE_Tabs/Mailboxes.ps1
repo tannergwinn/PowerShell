@@ -35,7 +35,14 @@ Set-MsolUserPrincipalName -UserPrincipalName danas@colonystarwood.com -NewUserPr
 
 #List what mailboxes user has access to
 
-get-mailbox | get-mailboxpermission -User "Jessyca Montas" | fl identity
+get-mailbox -ResultSize Unlimited | get-mailboxpermission -User "Jessyca Montas" | fl identity
+
+#Calendar Permissions for 1 user
+ForEach ($mbx in Get-Mailbox) {Get-MailboxFolderPermission ($mbx.Name + ":\Calendar") | Where-Object {$_.User -like 'Ariel Hart'} | Select Identity,User,AccessRights}
+
+#Calendar for all users in enviroment
+ForEach ($mbx in Get-Mailbox) {Get-MailboxFolderPermission ($mbx.Name + “:Calendar”) | Select Identity,User,AccessRights | ft -Wrap -AutoSize}
+
 
 #With sizes
 get-mailbox | get-mailboxpermission -User "Stephanie Campbell" | Get-MailboxStatistics | FT Displayname, totalitemsize -AutoSize
@@ -83,3 +90,14 @@ Set-Mailbox CAHMaintenance@Colonyamerican.onmicrosoft.com -Emailaddress CAHMaint
 
 #Clutter
 Get-mailbox -RecipientTypeDetails UserMailbox -ResultSize Unlimited | Set-Clutter -Enable $false
+
+Get-mailbox -ResultSize Unlimited | Set-Clutter -Enable $false
+
+$Clutterers = import-csv "C:\users\a.hart\ClutterDetails.csv"
+
+foreach ($Clutter in $Clutterers)
+
+{
+Get-Mailbox $Clutter.Userprincipalname | Set-Clutter -Enable $false
+
+}
