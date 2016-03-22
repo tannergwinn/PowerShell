@@ -14,9 +14,12 @@ $RMUser = "Ariel Hart"
     Remove-MailboxPermission -Identity $RMBX -User $RMUser -AccessRights FullAccess -InheritanceType All -Confirm:$false |
     Remove-RecipientPermission -AccessRights SendAs -Trustee $RMUser -Confirm:$false
 
+#geAdd the ADmins
+Get-Mailbox -ResultSize Unlimited | Add-MailboxPermission -User Tenant_SysAdmins -AccessRights FullAccess | Add-RecipientPermission -AccessRights SendAs -Trustee Tenant_SysAdmins -Confirm:$false
+
 #Set Primary email address
 
-$Ename = "david.lee"
+$Ename = "David.kleinebreil"
 $OldUPN = "$Ename@colonyamerican.com"
 $TempUPN = "$Ename@colonyamerican.onmicrosoft.com"
 $NewUPN = "$ename@colonystarwood.com"

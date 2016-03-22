@@ -7,6 +7,8 @@ $Requestor = "Melissa Ferris"
 
 add-MailboxFolderPermission -Identity $Owner -User $Requestor -AccessRights Owner
 
+add-MailboxFolderPermission -Identity "Fred Tuomi:\Calendar" -User "Melissa Ferris" -AccessRights Owner
+
 ##Access Levels-
 Owner, PublishingEditor, Editor, PublishingAuthor, Author, NonEditingAuthor, Reviewer, Contributor, AvailabilityOnly, LimitedDetails
 
