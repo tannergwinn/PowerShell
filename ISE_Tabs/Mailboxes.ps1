@@ -83,3 +83,12 @@ Set-Mailbox CAHMaintenance@Colonyamerican.onmicrosoft.com -Emailaddress CAHMaint
 
 #Clutter
 Get-mailbox -ResultSize Unlimited | Set-Clutter -Enable $false
+
+$Clutterers = import-csv "C:\users\a.hart\ClutterDetails.csv"
+
+foreach ($Clutter in $Clutterers)
+
+{
+Get-Mailbox $Clutter.Userprincipalname | Set-Clutter -Enable $false
+
+}
