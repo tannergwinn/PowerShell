@@ -18,6 +18,12 @@ Get-MailboxFolderPermission –Identity $Owner
 
 Get-MailboxFolderPermission –Identity Dana.dunn@colonyamerican.com:\Calendar | FT identity,User, AccessRights -AutoSize
 
+#Calendar Permissions for 1 user
+ForEach ($mbx in Get-Mailbox) {Get-MailboxFolderPermission ($mbx.Name + ":\Calendar") | Where-Object {$_.User -like 'Ariel Hart'} | Select Identity,User,AccessRights}
+
+#Calendar for all users in enviroment
+ForEach ($mbx in Get-Mailbox) {Get-MailboxFolderPermission ($mbx.Name + “:Calendar”) | Select Identity,User,AccessRights | ft -Wrap -AutoSize}
+
 #Calendar Manipulation
 
 Calendar permissions-
@@ -37,7 +43,7 @@ Get-MailboxFolderPermission –Identity ariel.hart@colonyamerican.com:\calendar
 
 
 #ShowDelegates
-Get-Mailbox "Ryan McBride" | Get-CalendarProcessing | select ResourceDelegates
+Get-Mailbox "arik prawer" | Get-CalendarProcessing | select ResourceDelegates
 
 #GetDelegates
 
