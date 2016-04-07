@@ -38,7 +38,7 @@ Set-MsolUserPrincipalName -UserPrincipalName danas@colonystarwood.com -NewUserPr
 
 #List what mailboxes user has access to
 
-get-mailbox -ResultSize Unlimited | get-mailboxpermission -User "Jessyca Montas" | fl identity
+get-mailbox -ResultSize Unlimited | get-mailboxpermission -User "Ariel Hart" | fl identity
 
 #Calendar Permissions for 1 user
 ForEach ($mbx in Get-Mailbox) {Get-MailboxFolderPermission ($mbx.Name + ":\Calendar") | Where-Object {$_.User -like 'Ariel Hart'} | Select Identity,User,AccessRights}

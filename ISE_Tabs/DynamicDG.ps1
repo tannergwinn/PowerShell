@@ -10,9 +10,9 @@ Get-Recipient -RecipientPreviewFilter $DG.RecipientFilter -ResultSize "Unlimited
 
 #Pull members of single list
 
-$DG = Get-DynamicDistributionGroup "Property Management - Chicago"
+$DG = Get-DynamicDistributionGroup "Call Center"
 
-Get-Recipient -RecipientPreviewFilter $DG.RecipientFilter | Select-Object DisplayName, @{Name=“DDG.Name”;Expression={$dg.Name}}
+Get-Recipient -RecipientPreviewFilter $DG.RecipientFilter | Select-Object DisplayName, @{Name=“DDG.Name”;Expression={$dg.Name}} | Measure
 
 #Review Filter
 Get-DynamicDistributionGroup "CSH-ALL" | fl recipientfilter
@@ -28,7 +28,7 @@ Get-DynamicDistributionGroup "CSH-ALL" | Set-DynamicDistributionGroup -recipient
 
 New-DynamicDistributionGroup -Name "Property Administrators" -RecipientFilter {(RecipientType -eq 'UserMailbox') -and (Title -like 'Property Administrator')}
 
-New-DynamicDistributionGroup -Name "Accounting - All" -RecipientFilter {(RecipientType -eq 'UserMailbox') -and (Department -like 'Accounting')}
+New-DynamicDistributionGroup -Name "Call Center" -RecipientFilter {(RecipientType -eq 'UserMailbox') -and (Department -like 'Call Center')}
 
 
 @{Name=“EmailAddresses”;Expression={$_.EmailAddresses |Where-Object {$_ -LIKE “SMTP:*”}}}

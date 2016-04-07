@@ -1,5 +1,6 @@
 ﻿Break
-
+##Add date /time pulled
+_$((Get-Date).ToString('MM-dd-yyyy_hh-mm-ss'))
 
 #Bulk Change users pswd last set date to today .csv
 
@@ -261,4 +262,8 @@ Write-host "User Turned Down:"$SAM
 }
 
 #UserList
-Get-ADUser -Filter * -Properties Displayname, Title, Office, Department, Manager, telephoneNumber, StreetAddress, MobilePhone, EmployeeID, Userprincipalname -SearchBase "OU=CAH_Users,DC=colonyah,DC=local" |Select-Object Displayname, Title, Office, Department, telephoneNumber, MobilePhone, EmployeeID, Manager, Userprincipalname | Export-Csv C:\ScriptsOutput\AD_Pull_0311.csv
+Get-ADUser -Filter * -Properties Displayname, Title, Office, Department, Manager, telephoneNumber, StreetAddress, MobilePhone, EmployeeID, Userprincipalname -SearchBase "OU=CAH_Users,DC=colonyah,DC=local" |Select-Object Displayname, Title, Office, Department, telephoneNumber, MobilePhone, EmployeeID, Manager, Userprincipalname | Export-Csv "C:\ScriptsOutput\AD_Pull_$((Get-Date).ToString('MMddyy')).csv"
+
+#Get users password last set / last login **Audit**
+Get-ADUser -filter  "Surname -eq 'Torres'"  -properties passwordlastset, LastLogonTimestamp |
+    Select-object Name, passwordlastset, @{n='LastLogonTimestamp';e={[DateTime]::FromFileTime($_.LastLogonTimestamp)}}
