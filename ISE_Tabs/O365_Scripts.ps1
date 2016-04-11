@@ -188,7 +188,7 @@ Get-MsolGroup -SearchString "CAH maintenance"
 
 #pull info on group -need group ID see above
 
-Get-MsolGroupMember -groupObjectid 'b5a0ef9b-ebe6-41e9-8df5-8d8446b5039d' | Select-Object DisplayName, EmailAddress | Export-Csv C:\ScriptsOutput\CAH_Employees.csv
+Get-MsolGroupMember -groupObjectid 'b5a0ef9b-ebe6-41e9-8df5-8d8446b5039d' #| Select-Object DisplayName, EmailAddress | Export-Csv C:\ScriptsOutput\CAH_Employees.csv
 
 #remove MSOLGroup
 

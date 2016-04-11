@@ -31,3 +31,7 @@ foreach ($M in $Moved)
 {
 Get-ADUser $M | Move-ADObject -TargetPath "OU=CAH_Disabled,DC=colonyah,DC=local"
 }
+
+#Count Users
+
+Get-ADUser -filter * -Properties * -SearchBase "OU=CAH_MailBox_Backup,DC=colonyah,DC=local" | Measure

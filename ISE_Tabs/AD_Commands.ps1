@@ -267,3 +267,10 @@ Get-ADUser -Filter * -Properties Displayname, Title, Office, Department, Manager
 #Get users password last set / last login **Audit**
 Get-ADUser -filter  "Surname -eq 'Torres'"  -properties passwordlastset, LastLogonTimestamp |
     Select-object Name, passwordlastset, @{n='LastLogonTimestamp';e={[DateTime]::FromFileTime($_.LastLogonTimestamp)}}
+
+#Get group info and export
+$CRMGroups = Get-ADGroup -Filter * -SearchBase "OU=Affiliates,OU=CRM,DC=colonyah,DC=local"
+foreach ($C in $CRMGroups)
+
+
+{Get-MsolGroup -SearchString $C.name | Select-Object DisplayName, ObjectID | Export-Csv C:\Scriptsoutput\CRMGroups.csv -append}
