@@ -8,8 +8,8 @@ Get-Mailbox $MBX |
     Add-RecipientPermission -AccessRights SendAs -Trustee $MUser -Confirm:$false
 
 #Remove rights to a mailbox
-$RMBX = "DiscoverySearchMailbox{D919BA05-46A6-415f-80AD-7E09334BB852}" 
-$RMUser = "Ariel Hart"
+$RMBX = "Atlanta North Central District" 
+$RMUser = "Candice Byndloss"
 
     Remove-MailboxPermission -Identity $RMBX -User $RMUser -AccessRights FullAccess -InheritanceType All -Confirm:$false |
     Remove-RecipientPermission -AccessRights SendAs -Trustee $RMUser -Confirm:$false
@@ -38,19 +38,16 @@ Set-MsolUserPrincipalName -UserPrincipalName danas@colonystarwood.com -NewUserPr
 
 #List what mailboxes user has access to
 
-get-mailbox -ResultSize Unlimited | get-mailboxpermission -User "Ariel Hart" | fl identity
+get-mailbox -ResultSize Unlimited | get-mailboxpermission -User "Candice Byndloss" | fl identity
+#With sizes
+get-mailbox -ResultSize Unlimited | get-mailboxpermission -User "Candice Byndloss" | Get-MailboxStatistics | FT Displayname, totalitemsize -AutoSize
+
 
 #Calendar Permissions for 1 user
 ForEach ($mbx in Get-Mailbox) {Get-MailboxFolderPermission ($mbx.Name + ":\Calendar") | Where-Object {$_.User -like 'Ariel Hart'} | Select Identity,User,AccessRights}
 
 #Calendar for all users in enviroment
 ForEach ($mbx in Get-Mailbox) {Get-MailboxFolderPermission ($mbx.Name + “:Calendar”) | Select Identity,User,AccessRights | ft -Wrap -AutoSize}
-
-
-#With sizes
-get-mailbox | get-mailboxpermission -User "Stephanie Campbell" | Get-MailboxStatistics | FT Displayname, totalitemsize -AutoSize
-
-#list members of shared Mailbox
 
 
 # Bulk add users to Distribution group
@@ -107,3 +104,16 @@ foreach ($Clutter in $Clutterers)
 Get-Mailbox $Clutter.Userprincipalname | Set-Clutter -Enable $false
 
 }
+
+#Get Size of AD users Mailbox
+Get-ADUser -Filter * -Properties * -SearchBase "OU=CAH_MailBox_Backup,DC=colonyah,DC=local" |Select-Object Userprincipalname, displayname | Export-Csv C:\ScriptOutput\MailSizes.csv
+
+$Offers = Import-Csv C:\ScriptOutput\MailSizes.csv
+foreach ($O in $Offers)
+{
+
+Get-mailbox $O.Userprincipalname | Get-MailboxStatistics | Select-Object Displayname, totalitemsize | Export-Csv C:\ScriptOutput\MailSizesO365.csv -Append
+}
+
+
+
