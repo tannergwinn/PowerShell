@@ -274,3 +274,7 @@ foreach ($C in $CRMGroups)
 
 
 {Get-MsolGroup -SearchString $C.name | Select-Object DisplayName, ObjectID | Export-Csv C:\Scriptsoutput\CRMGroups.csv -append}
+
+
+#Get members of a group
+Get-ADGroupmember "Colony American Drive" |Select-Object distinguishedName |Export-csv -path c:\ScriptOutput\disabledGroups_$((Get-Date).ToString('MM-dd-yyyy')).csv 

@@ -2,12 +2,25 @@
 
 ##Calendar permissions-
 
-$Owner =  "Fred Tuomi:\Calendar"
+$Owner =  "Taliesin:\Calendar"
 $Requestor = "Melissa Ferris"
 
 add-MailboxFolderPermission -Identity $Owner -User $Requestor -AccessRights Owner
 
 add-MailboxFolderPermission -Identity "Fred Tuomi:\Calendar" -User "Melissa Ferris" -AccessRights Owner
+
+
+#Bulk add calendar permissions to a person
+Get-MailBox | Where {$_.ResourceType -eq "Room"}
+
+$Owners =   "FallingWater:\Calendar", "HearstCastle:\Calendar", "TheBreakers:\Calendar", "PaintedLadies:\Calendar", "Graceland:\Calendar", "MountVernon:\Calendar", "Taliesin:\Calendar", "WhiteHouse:\Calendar", "SouthforkRanch:\Calendar", "TheBiltmoreEstates:\Calendar"
+$Requestor = "Melissa Ferris"
+
+foreach ($Owner in $Owners)
+{
+
+add-MailboxFolderPermission -Identity $Owner -User $Requestor -AccessRights Owner
+}
 
 ##Access Levels-
 Owner, PublishingEditor, Editor, PublishingAuthor, Author, NonEditingAuthor, Reviewer, Contributor, AvailabilityOnly, LimitedDetails
@@ -48,7 +61,6 @@ Get-MailboxFolderPermission –Identity ariel.hart@colonyamerican.com:\calendar
 Get-Mailbox "arik prawer" | Get-CalendarProcessing | select ResourceDelegates
 
 #GetDelegates
-
 
 
 #Remove all Delegates

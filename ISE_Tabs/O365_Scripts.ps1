@@ -15,11 +15,11 @@ connect-msolservice -credential $msolcred
 
 #Removing single users from O365 (license already removed)
 
-$User = "servicedesk@colonyamerican.com"
+$User = "Katie.Day@colonystarwood.com"
     Get-MsolUser -UserPrincipalName $User
     #Set-MsolUserLicense -UserPrincipalName $user -RemoveLicenses Colonyamerican:StandardPACK, Colonyamerican:CRMSTANDARD
     Remove-MsolUser -UserPrincipalName $User -Force
-    Remove-MsolUser -UserPrincipalName $User -RemoveFromRecyclebin -Force
+    #Remove-MsolUser -UserPrincipalName $User -RemoveFromRecyclebin -Force
 
 #Batch remove licesnses and users from O365 (Uses email address)
 

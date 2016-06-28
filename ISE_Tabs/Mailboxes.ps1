@@ -1,7 +1,7 @@
 ﻿#Add rights to a mailbox
 
-$MBX = "Dallas"  
-$MUser = "Cheryl Bloxam" 
+$MBX = Import-Csv C:\ScriptOutput\CSHRooms.csv  
+$MUser = "Mail" 
 
 Get-Mailbox $MBX |
     Add-MailboxPermission -User $MUser -AccessRights FullAccess -InheritanceType All |
@@ -19,8 +19,8 @@ Get-Mailbox -ResultSize Unlimited | Add-MailboxPermission -User Tenant_SysAdmins
 
 #Set Primary email address
 
-$Ename = "David.kleinebreil"
-$OldUPN = "$Ename@colonyamerican.com"
+$Ename = "Katieday"
+$OldUPN = "$Ename@colonystarwood.com"
 $TempUPN = "$Ename@colonyamerican.onmicrosoft.com"
 $NewUPN = "$ename@colonystarwood.com"
 
@@ -38,7 +38,7 @@ Set-MsolUserPrincipalName -UserPrincipalName danas@colonystarwood.com -NewUserPr
 
 #List what mailboxes user has access to
 
-get-mailbox -ResultSize Unlimited | get-mailboxpermission -User "Candice Byndloss" | fl identity
+get-mailbox -ResultSize Unlimited | get-mailboxpermission -User "Aubrey Hall" | fl identity
 #With sizes
 get-mailbox -ResultSize Unlimited | get-mailboxpermission -User "Candice Byndloss" | Get-MailboxStatistics | FT Displayname, totalitemsize -AutoSize
 
@@ -115,5 +115,34 @@ foreach ($O in $Offers)
 Get-mailbox $O.Userprincipalname | Get-MailboxStatistics | Select-Object Displayname, totalitemsize | Export-Csv C:\ScriptOutput\MailSizesO365.csv -Append
 }
 
+#Add Many Mailboxes to a user
 
+$MBXS = Import-Csv C:\ScriptOutput\CSHRooms.csv
+$MBUser = "Melissa Ferris"
+
+foreach ($MBX in $MBXS)
+{
+
+Get-Mailbox $MBX.Alias |
+    Add-MailboxPermission -User $MUser -AccessRights FullAccess -InheritanceType All
+    # |Add-RecipientPermission -AccessRights SendAs -Trustee $MUser -Confirm:$false
+}
+
+
+##Bulk remove mailbox permissions
+
+$RMBXS = Import-Csv C:\ScriptOutput\CSHRooms.csv
+$RMBUser = "Melissa Ferris"
+
+foreach ($RMBX in $RMBXS)
+{
+
+Get-mailbox -Identity $RMBX.alias | Remove-MailboxPermission  -User $RMBUser -AccessRights FullAccess -InheritanceType All -Confirm:$false |
+    Remove-RecipientPermission -AccessRights SendAs -Trustee $RMBUser -Confirm:$false
+}
+
+#Soft deleted mailboxes
+
+Get-Mailbox -SoftDeletedMailbox -Identity user@domain.com |fl *guid
+Remove-Mailbox -Identity 8f1f3498-cc94-4c86-9b30-3293cb3cacb2 -PermanentlyDelete
 

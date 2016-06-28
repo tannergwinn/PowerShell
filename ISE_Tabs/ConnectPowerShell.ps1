@@ -16,3 +16,5 @@ connect-msolservice -credential $LiveCred
 
 #Designate DC
 $PSDefaultParameterValues = @{"*-AD*:Server"='DC02.colonyah.local'}
+
+
