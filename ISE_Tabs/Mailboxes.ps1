@@ -28,7 +28,7 @@ Set-Mailbox $OldUPN -EmailAddress "SMTP:$TempUMP" | Set-Mailbox $TempUPN -Email
 
 #Set UPN
 Set-MsolUserPrincipalName -UserPrincipalName "$OldUPN" -NewUserPrincipalName $TempUPN 
-
+ 
 Set-MsolUserPrincipalName -UserPrincipalName $TempUPN -NewUserPrincipalName $NewUPN
 
 
