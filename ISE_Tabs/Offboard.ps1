@@ -38,7 +38,26 @@ Get-ADUser -filter 'enabled -eq $true'  -Properties * -SearchBase "OU=CAH_MailBo
 
 #Get the Users
 
-Get-ADUser -filter 'enabled -eq $true'  -Properties * -SearchBase "OU=CAH_MailBox_Backup,DC=colonyah,DC=local" |Select-object Userprincipalname | Export-csv -path c:\ScriptOutput\OffboardList_$((Get-Date).ToString('MM-dd-yyyy')).csv 
+#Get-ADUser -filter 'enabled -eq $true'  -Properties * -SearchBase "OU=CAH_MailBox_Backup,DC=colonyah,DC=local" |Select-object Userprincipalname | Export-csv -path c:\ScriptOutput\OffboardList_$((Get-Date).ToString('MM-dd-yyyy')).csv 
 
 #Hide From GAL
 Get-ADUser -filter * -SearchBase "OU=CAH_MailBox_Backup,DC=colonyah,DC=local" | Set-ADObject -replace @{msExchHideFromAddressLists=$true}
+
+#Re-run Litigation Hold
+
+Get-Mailbox -RecipientTypeDetails UserMailbox -ResultSize unlimited -Filter 'LitigationHoldEnabled -eq $false' | Set-Mailbox -LitigationHoldEnabled $true -LitigationHoldDuration 2555
+
+
+#Check outstanding mailboxes
+
+Get-Mailbox -RecipientTypeDetails UserMailbox -ResultSize unlimited -Filter 'LitigationHoldEnabled -eq $false'
+
+
+#Run on all mailboxes
+Get-Mailbox -ResultSize Unlimited -Filter {RecipientTypeDetails -eq "UserMailbox"} | Set-Mailbox -LitigationHoldEnabled $true -LitigationHoldDuration 2555
+
+
+
+
+
+

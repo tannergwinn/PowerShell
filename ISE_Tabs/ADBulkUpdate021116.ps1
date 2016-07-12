@@ -30,5 +30,8 @@ $SAM = $User.'Username'
 Get-ADUser $SAM | Set-ADUser -MobilePhone $($user.CellNumber)
 }
 
+#Dump Data
 
-Get-ADUser -Filter * -Properties Displayname, Title, EmployeeID, Office, Officephone, MobilePhone, userprincipalname, Manager -SearchBase "OU=CAH_Users,DC=colonyah,DC=local" | Select-Object Displayname, Title, EmployeeID, Office, Officephone, MobilePhone, userprincipalname, Manager | Export-Csv C:\ScriptsOutput\ADPull0215.csv
+Get-ADUser -Filter * -Properties Displayname, Title, EmployeeID, Office, Officephone, MobilePhone, userprincipalname  -SearchBase "OU=CAH_Users,DC=colonyah,DC=local" | 
+    Select-Object Displayname, Title, EmployeeID, Office, Officephone, MobilePhone, userprincipalname, @{Name='Manager';Expression={(get-aduser (get-aduser $_ -Properties manager).manager).name}} | 
+        Export-Csv C:\ScriptOutput\ADPull5$((Get-Date).ToString('MM-dd-yyyy')).csv

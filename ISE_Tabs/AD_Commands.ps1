@@ -84,9 +84,11 @@ Get-ADComputer -Filter * | Get-WmiObject win_32_bios -ComputerName {$_.Name}
 
 Enter-PSSession -ComputerName 
 
-#Query users manager name 
-
-(get-aduser (get-aduser A.hart -Properties manager).manager).samaccountName
+#Query users manager name
+(get-aduser (get-aduser A.hart -Properties manager).manager).name
+ 
+#Query users manager extended properties
+(get-aduser (get-aduser A.hart -Properties manager).manager -Properties EmployeeID).EmployeeID
 
 #Pull list of users by title
 
