@@ -6,6 +6,11 @@ $Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri ht
 Import-PSSession $Session
 connect-msolservice -credential $LiveCred
 
+
+#Connect SharePointOnline
+Connect-SPOService -Url https://colonyamerican-admin.sharepoint.com -credential Ariel.hart@colonyamerican.com
+
+
 #Disconnect O365
 Remove-PSSession $Session
 
