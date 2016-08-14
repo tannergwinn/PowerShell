@@ -280,3 +280,10 @@ foreach ($C in $CRMGroups)
 
 #Get members of a group
 Get-ADGroupmember "Colony American Drive" |Select-Object distinguishedName |Export-csv -path c:\ScriptOutput\disabledGroups_$((Get-Date).ToString('MM-dd-yyyy')).csv 
+
+#Get All the groups members -with description
+$ADGroups = Get-ADGroup -Filter * -SearchBase "OU=CAH_Groups,DC=colonyah,DC=local" -Properties Description
+foreach ($ADG in $ADGroups)
+
+{Get-ADGroupmember $ADG  | Select-Object Name, @{n='GroupName';e={$ADG.name}} , @{n='GroupDescription';e={(get-adgroup $ADG -properties description).Description}} | Export-Csv C:\Scriptoutput\ADGroups.csv -Append}
+
