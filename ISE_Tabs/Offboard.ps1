@@ -41,9 +41,9 @@ Get-ADUser -filter 'enabled -eq $true'  -Properties * -SearchBase "OU=CAH_MailBo
 #Get-ADUser -filter 'enabled -eq $true'  -Properties * -SearchBase "OU=CAH_MailBox_Backup,DC=colonyah,DC=local" |Select-object Userprincipalname | Export-csv -path c:\ScriptOutput\OffboardList_$((Get-Date).ToString('MM-dd-yyyy')).csv 
 
 #Set users hide from GAL
-Get-ADUser -filter 'HiddenFromAddressListsEnabled -eq $false' -SearchBase "OU=CAH_MailBox_Backup,DC=colonyah,DC=local" | Set-ADObject -replace @{msExchHideFromAddressLists=$true}
+Get-ADUser -filter * -SearchBase "OU=CAH_MailBox_Backup,DC=colonyah,DC=local" | Set-ADObject -replace @{msExchHideFromAddressLists=$true}
 
-#Get outstanding mailboxes - Litigation Hold
+#Measure outstanding mailboxes - Litigation Hold
 Get-Mailbox -RecipientTypeDetails UserMailbox -ResultSize unlimited -Filter 'LitigationHoldEnabled -eq $false' | Measure
 
 #Set Litigation Hold on new mailboxes

@@ -43,11 +43,7 @@ Remove-MsolUser -UserPrincipalName $user
 
 #Remove contact
 
-
-
-
 ##O365 Account license information 
-
 
 #Pull Licenses
 $AccountSku = Get-MsolAccountSku
@@ -63,6 +59,8 @@ $AccountSku[3].AccountSkuId
 $AccountSku[4].AccountSkuId
 $AccountSku[5].AccountSkuId
 $AccountSku[6].AccountSkuId
+$AccountSku[7].AccountSkuId
+$AccountSku[8].AccountSkuId
 
 #For Each user loop to pull license data
 $licensedetails = (Get-MsolUser -UserPrincipalName `
@@ -82,13 +80,13 @@ Get-MsolUser -All |
 Select-Object UserPrincipalName, DisplayName, isLicensed |
     Export-Csv C:\Temp\UnlicensesedToRemove.csv
 
-#pull Licenses applied to user
+#pull Licenses applied to user | #Export-Csv C:\Temp\E1ToRemove.csv
 
-Get-MsolUser -all |Where {$_.IsLicensesed -eq $true} | Select-Object Displayname, @{n="Licenses Type";e={$_.Licenses.AccountSkuid}}, UserPrincipalname | #Export-Csv C:\Temp\E1ToRemove.csv
+Get-MsolUser -all |Where {$_.IsLicensesed -eq $true} | Select-Object Displayname, @{n="Licenses Type";e={$_.Licenses.AccountSkuid}}, UserPrincipalname 
 
 
 $lines = @()
-foreach($msolUser in (Get-MSOLUser))
+foreach($msolUser in (Get-MSOLUser -All))
 {
     $UserInfo = Get-MSOLUser -UserPrincipalName $msolUser.UserPrincipalName
     foreach($license in $msolUser.Licenses)
@@ -100,7 +98,7 @@ foreach($msolUser in (Get-MSOLUser))
                   }
     }
 }
-$lines | Export-CSV C:\temp\E1ToRemove.csv
+$lines | Export-CSV C:\scriptoutput\E1Licenses.csv
 
 
 

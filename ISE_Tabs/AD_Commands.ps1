@@ -115,7 +115,7 @@ Function Get-PSWEXP{
 
  #filter like export results
 
- Get-ADUser -filter {(Title -like "Customer Service Representative") -and (enabled -eq $true)} -Properties * | Select-Object Name, Title, mail | Export-Csv C:\ScriptsOutput\CSR.csv
+ Get-ADUser -filter {(Title -like "Service Operations Manager") -and (enabled -eq $true)} -Properties physicalDeliveryOfficeName, MobilePhone, manager, title, mail | Select-Object Name, Title, mail, physicalDeliveryOfficeName, MobilePhone, @{Name='Manager';Expression={(get-aduser (get-aduser $_ -Properties manager).manager).name}} | Export-Csv C:\ScriptOutput\SOM.csv
 #reset password last set -use SAMAccountImport-Module ActiveDirectory$users = Get-ADUser -filter 'enabled -eq $true' -Properties SamAccountName -SearchBase "OU=CAF_Users,DC=colonyah,DC=local" foreach ($user in $users){$TargetUser = $user.SamAccountName$uObj = [ADSI]"LDAP://$TargetUser"$uObj.put("pwdLastSet", 0)$uObj.SetInfo()$uObj.put("pwdLastSet", -1)$uObj.SetInfo()}
 
 #Origional Change password last set date
