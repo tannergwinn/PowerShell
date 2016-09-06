@@ -25,3 +25,7 @@ Get-MsolUser -UserPrincipalName $user
     Set-MsolUserLicense -UserPrincipalName $user -RemoveLicenses Colonyamerican:STANDARDPACK
     Remove-MsolUser -UserPrincipalName $user -Force
     Remove-MsolUser -UserPrincipalName $user -RemoveFromRecyclebin
+
+#Remove all users from recyle bin 
+
+Get-MsolUser -all -ReturnDeletedUsers | Remove-MsolUser -RemoveFromRecycleBin -Force
