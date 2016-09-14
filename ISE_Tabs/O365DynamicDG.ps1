@@ -8,7 +8,7 @@ Get-Recipient -RecipientPreviewFilter $DG.RecipientFilter -ResultSize "Unlimited
 
 #Get members of single list - Count
 
-$DG = Get-DynamicDistributionGroup "TechnologyDepartment"
+$DG = Get-DynamicDistributionGroup "ServiceManagers"
 
 Get-Recipient -RecipientPreviewFilter $DG.RecipientFilter | Select-Object DisplayName, @{Name=“DDG.Name”;Expression={$dg.Name}} | Measure
 
