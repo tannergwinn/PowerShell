@@ -287,3 +287,7 @@ foreach ($ADG in $ADGroups)
 
 {Get-ADGroupmember $ADG  | Select-Object Name, @{n='GroupName';e={$ADG.name}} , @{n='GroupDescription';e={(get-adgroup $ADG -properties description).Description}} | Export-Csv C:\Scriptoutput\ADGroups.csv -Append}
 
+#Get groups user is a member of- include nested
+$username = 'w.boudreau'
+$dn = (Get-ADUser $username).DistinguishedName
+Get-ADGroup -LDAPFilter ("(member:1.2.840.113556.1.4.1941:={0})" -f $dn) | select -expand Name | sort Name
