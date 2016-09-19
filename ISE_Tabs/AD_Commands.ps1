@@ -155,7 +155,18 @@ foreach ($user in $users)
 Add-ADGroupMember -Identity "Colony American Drive" -Members $user
 Add-ADGroupMember -Identity "VPN Access" -Members $user
 } 
- 
+
+#Bulk Remove-ADuser from Group(s) by OU
+
+$RMGusers = Get-ADUser -Filter * -Properties * -SearchBase "OU=CAH_Mailbox_backup,DC=colonyah,DC=local"
+
+foreach ($user in $RMGusers) 
+
+{
+#Remove-ADGroupMember -Identity "Colony American Drive" -Members $user -Confirm:$false
+#Remove-ADGroupMember -Identity "VPN Access" -Members $user -Confirm:$false
+Remove-ADGroupMember -Identity "Atlas" -Members $user -Confirm:$false
+} 
 
 #fetch SamAccountName
 Import-Module ActiveDirectory
@@ -287,7 +298,7 @@ foreach ($ADG in $ADGroups)
 
 {Get-ADGroupmember $ADG  | Select-Object Name, @{n='GroupName';e={$ADG.name}} , @{n='GroupDescription';e={(get-adgroup $ADG -properties description).Description}} | Export-Csv C:\Scriptoutput\ADGroups.csv -Append}
 
-#Get groups user is a member of- include nested
+#Get groups user is a member of- include nessted
 $username = 'w.boudreau'
 $dn = (Get-ADUser $username).DistinguishedName
 Get-ADGroup -LDAPFilter ("(member:1.2.840.113556.1.4.1941:={0})" -f $dn) | select -expand Name | sort Name
