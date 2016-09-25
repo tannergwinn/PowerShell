@@ -97,5 +97,16 @@ Set-DistributionGroup Tenant_Sysadmins -ManagedBy Ariel.hart@colonyamerican.com 
 
 Set-MsolUserPrincipalName -ObjectId aa014588-4100-4199-934c-43fb3e2998ca -NewUserPrincipalName CAHMaintenance@Colonyamerican.com
 
+#Get all groups a user is a member of
 
+$Mailbox=get-Mailbox Johnathan.sorisho@colonystarwood.com
+$DN=$mailbox.DistinguishedName
+$Filter = "Members -like ""$DN"""
+Get-DistributionGroup -ResultSize Unlimited -Filter $Filter
 
+#Remove all groups from a user
+
+$Mailbox=get-Mailbox Johnathan.sorisho@colonystarwood.com
+$DN=$mailbox.DistinguishedName
+$Filter = "Members -like ""$DN"""
+Get-DistributionGroup -ResultSize Unlimited -Filter $Filter | Remove-DistributionGroup
