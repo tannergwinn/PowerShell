@@ -4,6 +4,10 @@ $Session = New-PSSession -ConfigurationName Microsoft.Exchange `
     -ConnectionUri https://outlook.office365.com/powershell-liveid/  `
     -Credential $creds -Authentication Basic -AllowRedirection
 Import-PSSession $Session
+
+#Connect Msol
+$msolcred = get-credential
+connect-msolservice -credential $msolcred
  
 # Check status create OWA groups
 Get-OwaMailboxPolicy | fl name, GroupCreationEnabled
@@ -27,7 +31,7 @@ Set-unifiedgroup -Identity "Debt Management" -Primarysmtpaddress Debt@colonystar
 
 #Get Group objectID
 
-Get-MsolGroup -SearchString "CAH maintenance"
+Get-MsolGroup -SearchString "CAH_CRM_Users"
 
 #pull info on group -need group ID see above
 
@@ -35,7 +39,7 @@ Get-MsolGroupMember -groupObjectid 'b5a0ef9b-ebe6-41e9-8df5-8d8446b5039d' #| Sel
 
 #remove MSOLGroup
 
-Remove-MsolGroup -ObjectId '1b93a62a-101e-4117-8fce-a632ded1b300' -Force
+Remove-MsolGroup -ObjectId '83b1a09b-5eee-4ce2-b2fc-46c95e575332' -Force
 
 #Dynamic email Groups
 
@@ -50,6 +54,8 @@ Get-Recipient -RecipientPreviewFilter $DDG.RecipientFilter | FT DisplayName
 
 #Display group members
 Get-DistributionGroupMember "CAH Scottsdale" |Select-Object Name #| measure
+
+Get-dis
 
 #bulk add users to group 
 
@@ -99,14 +105,17 @@ Set-MsolUserPrincipalName -ObjectId aa014588-4100-4199-934c-43fb3e2998ca -NewUse
 
 #Get all groups a user is a member of
 
-$Mailbox=get-Mailbox Johnathan.sorisho@colonystarwood.com
+$Mailbox= get-Mailbox Ariel.Hart@colonystarwood.com
 $DN=$mailbox.DistinguishedName
 $Filter = "Members -like ""$DN"""
-Get-DistributionGroup -ResultSize Unlimited -Filter $Filter
+Get-DistributionGroup -ResultSize Unlimited -Filter $Filter 
 
 #Remove all groups from a user
 
 $Mailbox=get-Mailbox Johnathan.sorisho@colonystarwood.com
 $DN=$mailbox.DistinguishedName
 $Filter = "Members -like ""$DN"""
-Get-DistributionGroup -ResultSize Unlimited -Filter $Filter | Remove-DistributionGroup
+Get-DistributionGroup -ResultSize Unlimited -Filter $Filter | Remove-distributiongroupmember
+
+
+
