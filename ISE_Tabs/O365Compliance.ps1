@@ -10,46 +10,46 @@ Import-PSSession $ccSession -Prefix cc -AllowClobber -DisableNameChecking
 $Host.UI.RawUI.WindowTitle = $UserCredential.UserName + " (Office 365 Security & Compliance Center)" 
 
 #Setup search
-New-ccComplianceSearch -Name "Phishing 09.29.16" -ExchangeLocation all -ContentMatchQuery 'From:fred.tuomi@outlook.com'
+$SearchName = "Phishing 09.30.16 B.Otero"
+
+New-ccComplianceSearch -Name $SearchName -ExchangeLocation barb.otero@colonystarwood.com -ContentMatchQuery 'Sent:08/30/2016..09/30/2016'
 
     ##Query examples
     #(Received:4/13/2016..4/14/2016) AND (Subject:'Action required')
     #'From:chatsuwloginsset12345@outlook.com'
+    #Sent sent>=08/30/2016 AND sent<=09/30/2016
+   
+#Queue Search
 
+Start-ccComplianceSearch $SearchName
 
-#Start Search
-
-Start-ccComplianceSearch "Phishing 09.29.16"
-
-#Get all compliance searches
+#Get all compliance searches' status
 
 Get-ccComplianceSearch  | Format-Table  -AutoSize
 
+#Start Search
 
-#get 1 search stats 
+New-ccComplianceSearchAction -SearchName $SearchName -Preview
 
-Get-ccComplianceSearch "Phishing 09.22.16" | Fl
+#Get Search Status
 
-New-ccComplianceSearchAction -SearchName "Phishing 09.22.16" -
-
-Get-ccComplianceSearchAction -Identity "Phishing 09.22.16_Preview" | FL
+Get-ccComplianceSearchAction -Identity $SearchName | FL
 
 #Export emails
 
-New-ccComplianceSearchAction -SearchName "Phishing 09.22.16" -Export
-Get-ccComplianceSearchAction -Identity "Phishing 09.22.16_Purge"
+New-ccComplianceSearchAction -SearchName $SearchName -Export
 
 #Remove messages
 
-New-ccComplianceSearchAction -SearchName "Phishing 09.22.16" -Purge
-
+#New-ccComplianceSearchAction -SearchName $SearchName -Purge
 
 #Edit search
 
-Set-ccComplianceSearch -Identity "Phishing 09.22.16" -ContentMatchQuery 'From:maxwellcarton120@outlook.com'
+Set-ccComplianceSearch -Identity $SearchName -ContentMatchQuery 'Sent:08/30/2016..09/30/2016'
 
 
 
+#Other Project
 set-OwaMailboxPolicy -GroupCreationEnabled $false -Identity OwaMailboxPolicy-Default
 
 Get-OwaMailboxPolicy -Identity OwaMailboxPolicy-Default | Select-Object Identity, GroupCreationEnabled
