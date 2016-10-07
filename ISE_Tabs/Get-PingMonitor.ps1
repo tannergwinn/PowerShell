@@ -1,5 +1,5 @@
 ﻿#cd "C:\Users\a.hart\OneDrive - Colony American\PowerShell\ISE_Tabs"
-# .\Get-PingMonitor.ps1 -Count 9999 -LogPath C:\ScriptOutput\CLR-065PrinterPing.txt -computer 10.65.1.250
+# .\Get-PingMonitor.ps1 -Count 9999 -LogPath C:\ScriptOutput\CLR-065PrinterPing10.03.16.txt -computer 10.65.1.250
 
 
     [CmdletBinding()]

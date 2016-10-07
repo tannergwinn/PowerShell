@@ -1,4 +1,10 @@
-﻿#Add rights to a mailbox
+﻿#Connect to O365
+$LiveCred = Get-Credential
+$Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://ps.outlook.com/powershell/ -Credential $LiveCred -Authentication Basic -AllowRedirection
+Import-PSSession $Session
+connect-msolservice -credential $LiveCred
+
+#Add rights to a mailbox
 
 $MBX = Import-Csv C:\ScriptOutput\CSHRooms.csv  
 $MUser = "Mail" 
