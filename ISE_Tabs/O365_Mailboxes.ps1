@@ -25,8 +25,8 @@ Get-Mailbox -ResultSize Unlimited | Add-MailboxPermission -User Tenant_SysAdmins
 
 #Set Primary email address
 
-$Ename = "finance"
-$OldUPN = "$Ename@colonystarwood.com"
+$Ename = "John.Price"
+$OldUPN = "$Ename@colonyamerican.com"
 $TempUPN = "$Ename@colonyamerican.onmicrosoft.com"
 $NewUPN = "$ename@colonystarwood.com"
 
