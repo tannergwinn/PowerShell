@@ -1,4 +1,5 @@
-﻿
+﻿#Move user records
+
 $TestUsers = import-csv "C:\Scriptsoutput\testusers.csv"
 
 foreach ($TestUser in $TestUsers)

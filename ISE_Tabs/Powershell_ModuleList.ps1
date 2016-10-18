@@ -1,6 +1,9 @@
-PS C:\Users\a.hart> Get-Module -ListAvailable
 
+#List all modules
 
+Get-Module -ListAvailable
+
+##Output from working machine 
     Directory: C:\Windows\system32\WindowsPowerShell\v1.0\Modules
 
 

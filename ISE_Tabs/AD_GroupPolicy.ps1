@@ -1,9 +1,9 @@
-﻿#GPO PS
+﻿#GPO Powershell
 
-#Get-GPO's
+#Get-GPO's List
 Get-GPO -All | Export-Csv C:\ScriptOutput\GPO_All.csv
 
-#Bulk set permissions in bulk - updates existing structure
+#Bulk set permissions - updates existing structure
 
 $GPOs = Import-Csv C:\ScriptSources\PrintGPOs.csv
 

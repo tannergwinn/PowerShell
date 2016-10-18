@@ -302,3 +302,8 @@ foreach ($ADG in $ADGroups)
 $username = 'w.boudreau'
 $dn = (Get-ADUser $username).DistinguishedName
 Get-ADGroup -LDAPFilter ("(member:1.2.840.113556.1.4.1941:={0})" -f $dn) | select -expand Name | sort Name
+
+
+
+#Search a body's by last name
+Get-ADUser -Filter 'surname -like "peterson"' -Properties Title, Office, company

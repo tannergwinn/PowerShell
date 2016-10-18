@@ -1,4 +1,6 @@
-﻿Get-MsolGroup -SearchString "cadence"
+﻿#Remove  O365 Groups
+
+Get-MsolGroup -SearchString "cadence"
 
 
 Remove-MsolGroup -ObjectId '818ea41d-1a89-4aba-b0fd-bdcf2a175fcd' -Force
