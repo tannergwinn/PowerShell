@@ -46,6 +46,9 @@ Get-ADUser -filter * -SearchBase "OU=CAH_MailBox_Backup,DC=colonyah,DC=local" | 
 #Measure outstanding mailboxes - Litigation Hold
 Get-Mailbox -RecipientTypeDetails UserMailbox -ResultSize unlimited -Filter 'LitigationHoldEnabled -eq $false' | Measure
 
+Get-Mailbox -ResultSize Unlimited -Filter 'LitigationHoldEnabled -eq $false' | Add-MailboxPermission -User Tenant_SysAdmins -AccessRights FullAccess | Add-RecipientPermission -AccessRights SendAs -Trustee Tenant_SysAdmins -Confirm:$false
+
+
 #Set Litigation Hold on new mailboxes
 
 Get-Mailbox -RecipientTypeDetails UserMailbox -ResultSize unlimited -Filter 'LitigationHoldEnabled -eq $false' | Set-Mailbox -LitigationHoldEnabled $true -LitigationHoldDuration 2555
