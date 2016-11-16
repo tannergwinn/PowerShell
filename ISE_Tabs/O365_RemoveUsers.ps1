@@ -1,8 +1,13 @@
 ﻿#Removing O365 Users
 
+$LiveCred = Get-Credential
+$Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://ps.outlook.com/powershell/ -Credential $LiveCred -Authentication Basic -AllowRedirection
+Import-PSSession $Session
+connect-msolservice -credential $LiveCred
+
 #Removing single users from O365 (license already removed)
 
-$User = "OpenEscrow@colonyamerican.com"
+$User = "emmanuel.maduakor@colonystarwood.com"
     Get-MsolUser -UserPrincipalName $User
     #Set-MsolUserLicense -UserPrincipalName $user -RemoveLicenses Colonyamerican:StandardPACK, Colonyamerican:CRMSTANDARD
     Remove-MsolUser -UserPrincipalName $User -Force

@@ -43,8 +43,10 @@ Get-ADUser -filter 'enabled -eq $true'  -Properties * -SearchBase "OU=CAH_MailBo
 #Set users hide from GAL
 Get-ADUser -filter * -SearchBase "OU=CAH_MailBox_Backup,DC=colonyah,DC=local" | Set-ADObject -replace @{msExchHideFromAddressLists=$true}
 
-#Measure outstanding mailboxes - Litigation Hold
+#Measure outstanding mailboxes - Litigation Hold 
 Get-Mailbox -RecipientTypeDetails UserMailbox -ResultSize unlimited -Filter 'LitigationHoldEnabled -eq $false' | Measure
+
+#Set Litigation Hold and Admin rights
 
 Get-Mailbox -ResultSize Unlimited -Filter 'LitigationHoldEnabled -eq $false' | Add-MailboxPermission -User Tenant_SysAdmins -AccessRights FullAccess | Add-RecipientPermission -AccessRights SendAs -Trustee Tenant_SysAdmins -Confirm:$false
 

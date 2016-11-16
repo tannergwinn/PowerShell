@@ -1,6 +1,31 @@
 ﻿Break
 #ADGroups
 
+
+#Get group info and export
+$CRMGroups = Get-ADGroup -Filter * -SearchBase "OU=Affiliates,OU=CRM,DC=colonyah,DC=local"
+foreach ($C in $CRMGroups)
+
+
+{Get-MsolGroup -SearchString $C.name | Select-Object DisplayName, ObjectID | Export-Csv C:\Scriptsoutput\CRMGroups.csv -append}
+
+
+#Get members of a group
+Get-ADGroupmember "Colony American Drive" |Select-Object distinguishedName |Export-csv -path c:\ScriptOutput\disabledGroups_$((Get-Date).ToString('MM-dd-yyyy')).csv 
+
+#Get All the groups members -with description
+$ADGroups = Get-ADGroup -Filter * -SearchBase "OU=CAH_Groups,DC=colonyah,DC=local" -Properties Description
+foreach ($ADG in $ADGroups)
+
+{Get-ADGroupmember $ADG  | 
+Select-Object Name, @{n='GroupName';e={$ADG.name}} , @{n='GroupDescription';e={(get-adgroup $ADG -properties description).Description}}, @{n='When Created';e={((Get-ADUser $_ -Properties whencreated).whencreated)}} | 
+Export-Csv C:\Scriptoutput\ADGroups$((Get-Date).ToString('MM-dd-yyyy')).csv -Append }
+
+#Get groups user is a member of- include nessted
+$username = 'w.boudreau'
+$dn = (Get-ADUser $username).DistinguishedName
+Get-ADGroup -LDAPFilter ("(member:1.2.840.113556.1.4.1941:={0})" -f $dn) | select -expand Name | sort Name
+
 #Restric Sendto on AD Distro Group
 
 set-adobject "CN=Atlas,OU=CAH_Groups,DC=colonyah,DC=local" -Add @{dLMemSubmitPerms="CN=Erika Yelenosky,OU=SDL-200,OU=CAH_Users,DC=colonyah,DC=local"}
