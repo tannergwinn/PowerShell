@@ -275,7 +275,9 @@ Write-host "User Turned Down:"$SAM
 }
 
 #UserList
-Get-ADUser -Filter * -Properties Displayname, Title, Office, Department, Manager, telephoneNumber, StreetAddress, MobilePhone, EmployeeID, Userprincipalname -SearchBase "OU=CAH_Users,DC=colonyah,DC=local" |Select-Object Displayname, Title, Office, Department, telephoneNumber, MobilePhone, EmployeeID, Manager, Userprincipalname | Export-Csv "C:\ScriptsOutput\AD_Pull_$((Get-Date).ToString('MMddyy')).csv"
+Get-ADUser -Filter * -Properties Displayname, Title, Office, Department, Manager, telephoneNumber, StreetAddress, MobilePhone, EmployeeID, Userprincipalname -SearchBase "OU=CAH_Users,DC=colonyah,DC=local" |
+Select-Object Displayname, Title, Office, Department, telephoneNumber, MobilePhone, EmployeeID, Manager, Userprincipalname | 
+Export-Csv "C:\ScriptsOutput\AD_Pull_$((Get-Date).ToString('MMddyy')).csv"
 
 #Get users password last set / last login **Audit**
 Get-ADUser -filter  "Surname -eq 'Torres'"  -properties passwordlastset, LastLogonTimestamp |
