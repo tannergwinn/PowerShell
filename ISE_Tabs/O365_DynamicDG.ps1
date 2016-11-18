@@ -1,4 +1,7 @@
-﻿#Get Dynamic list Members - Export
+﻿
+
+
+#Get Dynamic list Members - Export
 $DDG = Get-DynamicDistributionGroup "TechnologyDepartment"
 
 Foreach ($dg in $DDG)

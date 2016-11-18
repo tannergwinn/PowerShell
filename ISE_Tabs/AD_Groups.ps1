@@ -18,7 +18,7 @@ $ADGroups = Get-ADGroup -Filter * -SearchBase "OU=CAH_Groups,DC=colonyah,DC=loca
 foreach ($ADG in $ADGroups)
 
 {Get-ADGroupmember $ADG  | 
-Select-Object Name, @{n='GroupName';e={$ADG.name}} , @{n='GroupDescription';e={(get-adgroup $ADG -properties description).Description}}, @{n='When Created';e={((Get-ADUser $_ -Properties whencreated).whencreated)}} | 
+Select-Object Name, @{n='GroupName';e={$ADG.name}} , @{n='GroupDescription';e={(get-adgroup $ADG -properties description).Description}}, @{n='When User Created';e={((Get-ADUser $_ -Properties whencreated).whencreated)}} | 
 Export-Csv C:\Scriptoutput\ADGroups$((Get-Date).ToString('MM-dd-yyyy')).csv -Append }
 
 #Get groups user is a member of- include nessted

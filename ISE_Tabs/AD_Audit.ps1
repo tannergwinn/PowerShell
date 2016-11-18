@@ -9,4 +9,4 @@ Get-ADUser -filter *  -properties passwordlastset, LastLogonTimestamp, Whencreat
 
 Get-ADUser -filter *  -properties GivenName, Surname, Userprincipalname, title, physicalDeliveryOfficeName -SearchBase "OU=CAH_Users,DC=colonyah,DC=local" |
     Select-object GivenName, Surname, Userprincipalname, title, physicalDeliveryOfficeName |
-    Export-csv -path c:\ScriptOutput\YardiAudit_$((Get-Date).ToString('MM-dd-yyyy_hh-mm-ss')).csv
+    Export-csv -path c:\ScriptOutput\ActiveDirectoryUserList_$((Get-Date).ToString('MM-dd-yyyy')).csv
