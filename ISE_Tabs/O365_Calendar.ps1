@@ -2,8 +2,8 @@
 
 ##Calendar permissions-
 
-$Owner =  "Taliesin:\Calendar"
-$Requestor = "Melissa Ferris"
+$Owner =  "David Leger:\Calendar"
+$Requestor = "Chase Barrett"
 
 add-MailboxFolderPermission -Identity $Owner -User $Requestor -AccessRights Owner
 
@@ -53,15 +53,12 @@ Remove-MailboxFolderPermission -Identity $Owner -user $Requestor
 Get-MailboxFolderPermission –Identity ariel.hart@colonyamerican.com:\calendar
 
 
-#Attempt at bulk retrieval of Calendar permissions
-
-
-
-#ShowDelegates
-Get-Mailbox "arik prawer" | Get-CalendarProcessing | select ResourceDelegates
 
 #GetDelegates
 
+Get-Mailbox "David Leger" | Get-CalendarProcessing | select ResourceDelegates
+
 
 #Remove all Delegates
-Get-Mailbox -identity "alias" | Set-CalendarProcessing -ResourceDelegates $null
+
+Get-Mailbox -identity "David Leger" | Set-CalendarProcessing -ResourceDelegates $null
