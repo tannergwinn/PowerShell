@@ -79,14 +79,17 @@ Get-Mailbox -RecipientTypeDetails UserMailbox -ResultSize unlimited -Filter 'Lit
 #Set Litigation Hold and Admin rights
 #####################################
 
-Get-Mailbox -RecipientTypeDetails UserMailbox -ResultSize Unlimited -Filter 'LitigationHoldEnabled -eq $false' | Add-MailboxPermission -User Tenant_SysAdmins -AccessRights FullAccess | Add-RecipientPermission -AccessRights SendAs -Trustee Tenant_SysAdmins -Confirm:$false
+Get-Mailbox -ResultSize Unlimited -Filter 'LitigationHoldEnabled -eq $false' | Add-MailboxPermission -User Tenant_SysAdmins -AccessRights FullAccess | Add-RecipientPermission -AccessRights SendAs -Trustee Tenant_SysAdmins -Confirm:$false
+
+-RecipientTypeDetails UserMailbox
 
 #####################################
 #Set Litigation Hold on new mailboxes
 #####################################
 
-Get-Mailbox -RecipientTypeDetails UserMailbox -ResultSize unlimited -Filter 'LitigationHoldEnabled -eq $false' | Set-Mailbox -LitigationHoldEnabled $true -LitigationHoldDuration 2555
+Get-Mailbox -ResultSize unlimited -Filter 'LitigationHoldEnabled -eq $false' | Set-Mailbox -LitigationHoldEnabled $true -LitigationHoldDuration 2555
 
+-RecipientTypeDetails UserMailbox
 #####################################
 #Set Litigation Hold on all mailboxes
 #####################################
