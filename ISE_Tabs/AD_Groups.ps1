@@ -21,10 +21,11 @@ foreach ($ADG in $ADGroups)
 Select-Object Name, @{n='GroupName';e={$ADG.name}} , @{n='GroupDescription';e={(get-adgroup $ADG -properties description).Description}}, @{n='When User Created';e={((Get-ADUser $_ -Properties whencreated).whencreated)}} | 
 Export-Csv C:\Scriptoutput\ADGroups$((Get-Date).ToString('MM-dd-yyyy')).csv -Append }
 
-#Get groups user is a member of- include nessted
-$username = 'w.boudreau'
+#Get groups user is a member of- include nested
+$username = 'J.Price'
 $dn = (Get-ADUser $username).DistinguishedName
-Get-ADGroup -LDAPFilter ("(member:1.2.840.113556.1.4.1941:={0})" -f $dn) | select -expand Name | sort Name
+$Name = (Get-ADUser $username).Name
+Get-ADGroup -LDAPFilter ("(member:1.2.840.113556.1.4.1941:={0})" -f $dn) | select Name, DistinguishedName | sort Name | Export-Csv C:\ScriptOutput\"$Name"ADGroups_$((Get-Date).ToString('MM-dd-yyyy')).csv
 
 #Restric Sendto on AD Distro Group
 
