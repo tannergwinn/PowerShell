@@ -108,7 +108,7 @@ Set-MsolUserPrincipalName -ObjectId aa014588-4100-4199-934c-43fb3e2998ca -NewUse
 $Mailbox= get-Mailbox Ariel.Hart@colonystarwood.com
 $DN=$mailbox.DistinguishedName
 $Filter = "Members -like ""$DN"""
-Get-DistributionGroup -ResultSize Unlimited -Filter $Filter 
+Get-DistributionGroup -ResultSize Unlimited -Filter $Filter | Select-Object Name, PrimarySmtpAddress | Export-Csv C:\ScriptOutput\"$Mailbox"O365Groups_$((Get-Date).ToString('MM-dd-yyyy')).csv
 
 #Remove all groups from a user
 
