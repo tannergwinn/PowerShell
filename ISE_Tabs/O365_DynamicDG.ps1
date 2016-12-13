@@ -1,4 +1,8 @@
-﻿
+﻿$creds = Get-Credential
+$Session = New-PSSession -ConfigurationName Microsoft.Exchange `
+    -ConnectionUri https://outlook.office365.com/powershell-liveid/  `
+    -Credential $creds -Authentication Basic -AllowRedirection
+Import-PSSession $Session
 
 
 #Get Dynamic list Members - Export
@@ -11,7 +15,7 @@ Get-Recipient -RecipientPreviewFilter $DG.RecipientFilter -ResultSize "Unlimited
 
 #Get members of single list - Count
 
-$DG = Get-DynamicDistributionGroup "ServiceManagers"
+$DG = Get-DynamicDistributionGroup "Corporate - All"
 
 Get-Recipient -RecipientPreviewFilter $DG.RecipientFilter | Select-Object DisplayName, @{Name=“DDG.Name”;Expression={$dg.Name}} | Measure
 
@@ -33,7 +37,11 @@ Get-DynamicDistributionGroup "ScottsdaleOffice" | Set-DynamicDistributionGroup -
 
 New-DynamicDistributionGroup -Name "Property Administrators" -RecipientFilter {(RecipientType -eq 'UserMailbox') -and (Title -like 'Property Administrator')}
 
-New-DynamicDistributionGroup -Name "Call Center" -RecipientFilter {(RecipientType -eq 'UserMailbox') -and (Department -like 'Call Center')}
+New-DynamicDistributionGroup -Name "Service Operations - All" -RecipientFilter {(RecipientType -eq 'UserMailbox') -and (Department -like 'Service Operations')}
+
+
+
+New-DynamicDistributionGroup -Name "Corporate - All" -RecipientFilter {(RecipientTypedetails -eq 'UserMailbox') -and (-not(Department -like 'Property Management')) -and (-not(Department -like 'Service Operations'))}
 
 
 

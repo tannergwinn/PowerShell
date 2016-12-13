@@ -286,3 +286,5 @@ Get-ADUser -filter  "Surname -eq 'Torres'"  -properties passwordlastset, LastLog
 
 #Search a body's by last name
 Get-ADUser -Filter 'surname -like "peterson"' -Properties Title, Office, company
+
+Get-ADUser -Filter * -Properties DisplayName, Description
