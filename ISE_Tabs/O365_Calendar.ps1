@@ -39,6 +39,7 @@ ForEach ($mbx in Get-Mailbox) {Get-MailboxFolderPermission ($mbx.Name + ":\Calen
 #Calendar for all users in enviroment
 ForEach ($mbx in Get-Mailbox) {Get-MailboxFolderPermission ($mbx.Name + “:Calendar”) | Select Identity,User,AccessRights | ft -Wrap -AutoSize}
 
+
 #Calendar Manipulation
 
 Calendar permissions-
@@ -47,11 +48,10 @@ add-MailboxFolderPermission -Identity brad.hull@colonyamerican.com:\Calendar -Us
 ##Access Levels-
 ##Owner PublishingEditor, Editor, PublishingAuthor, Author, NonEditingAuthor, Reviewer, Contributor, AvailabilityOnly, LimitedDetails
 
-Remove-MailboxFolderPermission -Identity $Owner -user $Requestor
+Remove-MailboxFolderPermission -Identity user@mycompany:\calendar -user myuser@mycompany.com
 
 #View Permissions-
-Get-MailboxFolderPermission –Identity ariel.hart@colonyamerican.com:\calendar
-
+Get-MailboxFolderPermission –Identity Jennifer.stewart@colonyamerican.com:\calendar
 
 
 #GetDelegates

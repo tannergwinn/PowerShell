@@ -51,23 +51,8 @@ Remove-MailboxPermission -Identity $RMBX -User $RMUser -AccessRights FullAccess 
 
 Set-Mailbox carlos.quintanilla@colonyamerican.onmicrosoft.com -EmailAddress SMTP:carlos.quintanilla@colonyamerican.com
 
-
-#Calendar Manipulation
-
-Calendar permissions-
-add-MailboxFolderPermission -Identity brad.hull@colonyamerican.com:\Calendar -User Melissa.Ferris@colonyamerican.com -AccessRights PublishingAuthor
-
-##Access Levels-
-##Owner PublishingEditor, Editor, PublishingAuthor, Author, NonEditingAuthor, Reviewer, Contributor, AvailabilityOnly, LimitedDetails
-
-Remove-MailboxFolderPermission -Identity user@mycompany:\calendar -user myuser@mycompany.com
-
-#View Permissions-
-Get-MailboxFolderPermission –Identity Jennifer.stewart@colonyamerican.com:\calendar
-
 #Get alias list
 Get-Mailbox "CAH_Social" | Select-Object Displayname,@{Name=“EmailAddresses”;Expression={$_.EmailAddresses |Where-Object {$_ -LIKE “SMTP:*”}}} | Sort |  Export-Csv C:\ScriptsOutput\SocialEmail.csv
-
 
 
 #pull time of last Dirsync by user
@@ -102,3 +87,11 @@ Get-MailboxFolderPermission –Identity keshia.king@colonyamerican.com:\Calendar
 
 #list the users
 Get-MsolUser -ReturnDeletedUsers | FL UserPrincipalName,ObjectID
+
+####################
+#Audit list of usermailboxes
+####################
+
+Get-Mailbox -RecipientTypeDetails UserMailbox -ResultSize unlimited -Filter
+
+Get-Mailbox -Identity Ariel.hart@colonystarwood.com | Select-Object name, Office, UserPrincipalName | Export-Csv C:\ScriptOutput\O365UserEmailList_$((Get-Date).ToString('MM-dd-yyyy')).csv
