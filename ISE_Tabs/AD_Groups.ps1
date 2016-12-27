@@ -11,7 +11,7 @@ foreach ($C in $CRMGroups)
 
 
 #Get members of a group
-Get-ADGroupmember "Level_1" |Select-Object Name |Export-csv -path c:\ScriptOutput\Level_1_$((Get-Date).ToString('MM-dd-yyyy')).csv 
+Get-ADGroupmember "CMP_Prod" |Select-Object Name |Export-csv -path c:\ScriptOutput\CMP_Prod$((Get-Date).ToString('MM-dd-yyyy')).csv 
 
 #Get All the groups members -with description
 $ADGroups = Get-ADGroup -Filter * -SearchBase "OU=CAH_Groups,DC=colonyah,DC=local" -Properties Description
@@ -20,6 +20,15 @@ foreach ($ADG in $ADGroups)
 {Get-ADGroupmember $ADG  | 
 Select-Object Name, @{n='GroupName';e={$ADG.name}} , @{n='GroupDescription';e={(get-adgroup $ADG -properties description).Description}}, @{n='When User Created';e={((Get-ADUser $_ -Properties whencreated).whencreated)}} | 
 Export-Csv C:\Scriptoutput\ADGroups$((Get-Date).ToString('MM-dd-yyyy')).csv -Append }
+
+#Get CMP groups members
+
+$ADGroups = Get-ADGroup -Filter {name -like "*CMP*"} -Properties Description
+foreach ($ADG in $ADGroups)
+
+{Get-ADGroupmember $ADG  | 
+Select-Object Name, userprincipalname, @{n='Group Name';e={$ADG.name}} , @{n='Group Description';e={(get-adgroup $ADG -properties description).Description}} | 
+Export-Csv C:\Scriptoutput\CMPRoles$((Get-Date).ToString('MM-dd-yyyy')).csv -Append }
 
 #Get groups user is a member of- include nested
 $username = 'J.Price'

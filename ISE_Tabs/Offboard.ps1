@@ -1,4 +1,5 @@
-﻿## This will remove the groups and
+﻿
+## This will remove the groups and
 ## remove the licenses / delete the user in O365 / Move to disabled OU 
 ## for DISABLED USERS in CAH_MailBox_Backup OU
 ########################################################################
@@ -55,7 +56,7 @@ Get-ADUser $M | Move-ADObject -TargetPath "OU=CAH_Disabled,DC=colonyah,DC=local"
 #Measure Users left to offboard
 ###############################
 
-Get-ADUser -filter 'enabled -eq $true'  -Properties * -SearchBase "OU=CAH_MailBox_Backup,DC=colonyah,DC=local" | Measure 
+Get-ADUser -filter 'enabled -eq $true'  -Properties * -SearchBase "OU=CAH_MailBox_Backup,DC=colonyah,DC=local" | Measure | Select-Object Count |FL
 
 ##############################################
 #Get the Users who are offboarded send to file

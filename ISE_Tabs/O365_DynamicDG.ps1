@@ -10,7 +10,7 @@ $DDG = Get-DynamicDistributionGroup "TechnologyDepartment"
 
 Foreach ($dg in $DDG)
 {
-Get-Recipient -RecipientPreviewFilter $DG.RecipientFilter -ResultSize "Unlimited" | Select-Object DisplayName, @{Name=“DDG.Name”;Expression={$dg.Name}} | Export-csv C:\ScriptOutput\TechnologyDepartment$((Get-Date).ToString('MM-dd-yyyy')).csv
+Get-Recipient -RecipientPreviewFilter $DG.RecipientFilter -ResultSize "Unlimited" | Select-Object DisplayName, @{Name=“DDG.Name”;Expression={$dg.Name}} | Export-csv C:\ScriptOutput\$DDG$((Get-Date).ToString('MM-dd-yyyy')).csv
 }
 
 #Get members of single list - Count

@@ -12,9 +12,9 @@ Import-PSSession $ccSession -Prefix cc -AllowClobber -DisableNameChecking
 $Host.UI.RawUI.WindowTitle = $UserCredential.UserName + " (Office 365 Security & Compliance Center)" 
 
 #Setup search
-$SearchName = "Phishing 10.02.16 barb.otero@outlook.com"
+$SearchName = "Phishing 12.21.16 frederick.tuomi@colonystarwoood.com"
 
-New-ccComplianceSearch -Name $SearchName -ExchangeLocation all -ContentMatchQuery 'From:barb.otero@outlook.com'
+New-ccComplianceSearch -Name $SearchName -ExchangeLocation all -ContentMatchQuery 'From:frederick.tuomi@colonystarwoood.com'
 
     ##Query examples
     #(Received:4/13/2016..4/14/2016) AND (Subject:'Action required')

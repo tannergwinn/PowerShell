@@ -92,6 +92,4 @@ Get-MsolUser -ReturnDeletedUsers | FL UserPrincipalName,ObjectID
 #Audit list of usermailboxes
 ####################
 
-Get-Mailbox -RecipientTypeDetails UserMailbox -ResultSize unlimited -Filter
-
-Get-Mailbox -Identity Ariel.hart@colonystarwood.com | Select-Object name, Office, UserPrincipalName | Export-Csv C:\ScriptOutput\O365UserEmailList_$((Get-Date).ToString('MM-dd-yyyy')).csv
+Get-Mailbox -RecipientTypeDetails UserMailbox -ResultSize unlimited | Select-Object name, Office, UserPrincipalName | Export-Csv C:\ScriptOutput\O365UserEmailList_$((Get-Date).ToString('MM-dd-yyyy')).csv
