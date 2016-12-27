@@ -13,19 +13,31 @@ Get-ChildItem -Recurse "\\dfs02\Colony American" |
 #################################
 #Client Requirements:
 #File names containing: title, commitment, policy for 800+ properties
-#Location 1: I:/ Acquisitions/ _Georgia
-#Location 2: I:/ Acquisitions/ SWAY Acquisition Documents
+#Search Location 1: I:/ Acquisitions/ _Georgia
+#SearchLocation 2: I:/ Acquisitions/ SWAY Acquisition Documents
+#Destination Location: I:\16. Dispositions\___(Externally Shared) Portfolio Diligence\PragerGroupGA\Titles, Commitments, Policies
 #Tasks:
 #Get working directory list or the properties
 #Edit script to match key words and output configuration
 #################################
 
 
+Get-ChildItem -Path E:\music -Filter *.mp3 -Recurse | Select-Object directoryname, basename, length
 
+#Get list of applicable directories
 
+$PropsList = Import-Csv C:\ScriptSources\GA859PropertyListSource.csv
 
+foreach ($PL in $PropsList)
 
+{
 
+$propID = $PL.PropertyID
+
+Get-ChildItem -Filter {Fullname -like '*$PropID*'}  -Recurse | ?{ $_.PSIsContainer } | Select-Object FullName
+}
+
+Get-ChildItem -dir -Filter {Fullname -like '*1017fore*'} -Recurse | ?{ $_.PSIsContainer } | Select-Object FullName
 
 
 
