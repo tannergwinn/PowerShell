@@ -32,7 +32,7 @@ $AccountSku[8].AccountSkuId
 
 #For Each user loop to pull license data
 $licensedetails = (Get-MsolUser -UserPrincipalName `
-  "Ariel.Hart@colonyamerican.com").Licenses
+  "ariel.hart@colonystarwood.com").Licenses
 $licensedetails.Count;
 # If there's a license, show the details.
 # Otherwise, the output is blank.

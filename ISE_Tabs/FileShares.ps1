@@ -37,9 +37,9 @@ $propID = $PL.PropertyID
 Get-ChildItem -Filter {Fullname -like '*$PropID*'}  -Recurse | ?{ $_.PSIsContainer } | Select-Object FullName
 }
 
-Get-ChildItem -dir -Filter {Fullname -like '*1017fore*'} -Recurse | ?{ $_.PSIsContainer } | Select-Object FullName
+Get-ChildItem -dir -Path "I:\Acquisitions\_Georgia\_Single Assets"  -Filter '*p0001234*' -Recurse | Select-Object FullName | Export-Csv C:\ScriptOutput\PropDirectory2.csv
 
-
+| ?{ $_.PSIsContainer } 
 
 #############SOURCE SCRIPT#############
 

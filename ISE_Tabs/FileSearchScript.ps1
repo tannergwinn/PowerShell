@@ -12,7 +12,7 @@
 
 #path vars
 
-$CSVPath = "C:\ScriptSources\GA859PropertyListSource.csv";
+$CSVPath = "C:\ScriptSources\GA859PropertyListSource3_p.csv";
 
 $SearchDir = "I:\Acquisitions\_Georgia";
 
@@ -28,7 +28,7 @@ $Codes = Get-Content $CSVPath;
 
 Foreach ($Code in $Codes){
 
-write-output "`nCode from CSV = $Code" >> $DestDir\log.txt;
+write-output "`nCode from CSV = $Code" >> $DestDir\GA859PropertyListSource3_p-log.txt;
 
 write-host "`nCode from CSV = $Code";
 

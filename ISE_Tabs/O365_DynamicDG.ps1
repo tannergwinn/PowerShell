@@ -35,7 +35,7 @@ Get-DynamicDistributionGroup "ScottsdaleOffice" | Set-DynamicDistributionGroup -
 
 #Create dynamic distribution list
 
-New-DynamicDistributionGroup -Name "Property Administrators" -RecipientFilter {(RecipientType -eq 'UserMailbox') -and (Title -like 'Property Administrator')}
+New-DynamicDistributionGroup -Name "Leasing Consultants" -RecipientFilter {(RecipientType -eq 'UserMailbox') -and (Title -like 'Leasing Consultant')}
 
 New-DynamicDistributionGroup -Name "Service Operations - All" -RecipientFilter {(RecipientType -eq 'UserMailbox') -and (Department -like 'Service Operations')}
 

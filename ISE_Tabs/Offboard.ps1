@@ -62,7 +62,7 @@ Get-ADUser -filter 'enabled -eq $true'  -Properties * -SearchBase "OU=CAH_MailBo
 #Get the Users who are offboarded send to file
 ##############################################
 
-Get-ADUser -filter 'enabled -eq $true'  -Properties * -SearchBase "OU=CAH_MailBox_Backup,DC=colonyah,DC=local" |Select-object Userprincipalname | Export-csv -path c:\ScriptOutput\OffboardList_$((Get-Date).ToString('MM-dd-yyyy')).csv 
+Get-ADUser -filter 'enabled -eq $true'  -Properties Userprincipalname -SearchBase "OU=CAH_MailBox_Backup,DC=colonyah,DC=local" | Select-object Userprincipalname | Export-csv -path c:\ScriptOutput\OffboardList_$((Get-Date).ToString('MM-dd-yyyy')).csv 
 
 ########################
 #Set users hide from GAL
@@ -80,7 +80,7 @@ Get-Mailbox -RecipientTypeDetails UserMailbox -ResultSize unlimited -Filter 'Lit
 #Set Litigation Hold and Admin rights
 #####################################
 
-Get-Mailbox -ResultSize Unlimited -Filter 'LitigationHoldEnabled -eq $false' | Add-MailboxPermission -User Tenant_SysAdmins -AccessRights FullAccess | Add-RecipientPermission -AccessRights SendAs -Trustee Tenant_SysAdmins -Confirm:$false
+Get-Mailbox -ResultSize Unlimited -Filter 'LitigationHoldEnabled -eq $false' | Add-MailboxPermission -User Tenant_SysAdmins -AccessRights FullAccess | Add-RecipientPermission -AccessRights SendAs -Trustee Tenant_SysAdmins -Confirm:$false | Set-Mailbox -LitigationHoldEnabled $true -LitigationHoldDuration 2555
 
 -RecipientTypeDetails UserMailbox
 

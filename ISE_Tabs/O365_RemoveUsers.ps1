@@ -7,7 +7,7 @@ connect-msolservice -credential $LiveCred
 
 #Removing single users from O365 (license already removed)
 
-$User = "emmanuel.maduakor@colonystarwood.com"
+$User = "madison.grubbs@colonystarwood.com"
     Get-MsolUser -UserPrincipalName $User
     #Set-MsolUserLicense -UserPrincipalName $user -RemoveLicenses Colonyamerican:StandardPACK, Colonyamerican:CRMSTANDARD
     Remove-MsolUser -UserPrincipalName $User -Force
