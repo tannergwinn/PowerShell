@@ -35,8 +35,20 @@ Get-MsolGroup -SearchString "CAH_CRM_Users"
 
 #pull info on group -need group ID see above
 
-Get-MsolGroupMember -groupObjectid 'b5a0ef9b-ebe6-41e9-8df5-8d8446b5039d' #| Select-Object DisplayName, EmailAddress | Export-Csv C:\ScriptsOutput\CAH_Employees.csv
+Get-MsolGroupMember -groupObjectid '0ee029e5-6ccc-4bd9-a775-8cb3cd71fece' -ManagedBy| FL #| Select-Object DisplayName, EmailAddress | Export-Csv C:\ScriptsOutput\CAH_Employees.csv
 
+
+Get-MsolGroup -ObjectId '0ee029e5-6ccc-4bd9-a775-8cb3cd71fece' -ManagedBy
+
+Get-DistributionGroup Finance@colonystarwood.com | FL
+
+Set-DistributionGroup  
+Set-DistributionGroup -Identity "Finance@colonystarwood.com" -MemberJoinRestriction Open -BypassSecurityGroupManagerCheck
+
+
+
+Set-DistributionGroup -Identity "Finance@colonystarwood.com" -ManagedBy Ariel.Hart@colonystarwood.com -BypassSecurityGroupManagerCheck
+ 
 #remove MSOLGroup
 
 Remove-MsolGroup -ObjectId '83b1a09b-5eee-4ce2-b2fc-46c95e575332' -Force

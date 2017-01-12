@@ -29,18 +29,6 @@ $userGroups | %{get-adgroup $_ | Remove-ADGroupMember -confirm:$false -member $S
 $userGroups = $null
 } $users | %{RemoveMemberships $_.SAMAccountName}
 
-#########################
-#Remove records from O365
-#########################
-
-$offboard = Get-ADUser -filter 'enabled -eq $false' -Properties SamAccountName, UserPrincipalName -SearchBase "OU=CAH_MailBox_Backup,DC=colonyah,DC=local"
-
-foreach ($O in $Offboard)
-
-{
-#Get-MsolUser -UserPrincipalName $o.UserPrincipalName 
-Remove-MsolUser -UserPrincipalName $o.UserPrincipalName -Force
-}
 
 ####################
 #Move to disabled OU
@@ -96,5 +84,21 @@ Get-Mailbox -ResultSize unlimited -Filter 'LitigationHoldEnabled -eq $false' | S
 #####################################
 
 Get-Mailbox -ResultSize Unlimited -Filter {RecipientTypeDetails -eq "UserMailbox"} | Set-Mailbox -LitigationHoldEnabled $true -LitigationHoldDuration 2555
+
+
+
+###########################################
+#Remove records from O365
+#** No longer needed when Offboarding - Changes in Centrify
+###########################################
+
+$offboard = Get-ADUser -filter 'enabled -eq $false' -Properties SamAccountName, UserPrincipalName -SearchBase "OU=CAH_MailBox_Backup,DC=colonyah,DC=local"
+
+foreach ($O in $Offboard)
+
+{
+#Get-MsolUser -UserPrincipalName $o.UserPrincipalName 
+Remove-MsolUser -UserPrincipalName $o.UserPrincipalName -Force
+}
 
 

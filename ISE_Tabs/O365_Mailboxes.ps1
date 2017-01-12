@@ -81,7 +81,9 @@ foreach ($smbU in $smbUs)
 
 #mailbox quota
 
-Get-mailbox insurance@colonyamerican.com | Set-Mailbox -ProhibitSendReceiveQuota 10GB -ProhibitSendQuota 9.75GB -IssueWarningQuota 9.5GB
+Get-Mailbox insurance@colonystarwood.com | Select-Object ProhibitSendReceiveQuota, ProhibitSendQuota, IssueWarningQuota | FL
+
+Get-mailbox insurance@colonystarwood.com | Set-Mailbox -ProhibitSendReceiveQuota 50GB -ProhibitSendQuota 49.5GB -IssueWarningQuota 49GB
 
 
 #list the mailboxes with Properties
