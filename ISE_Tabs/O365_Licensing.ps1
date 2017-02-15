@@ -30,6 +30,9 @@ $AccountSku[6].AccountSkuId
 $AccountSku[7].AccountSkuId
 $AccountSku[8].AccountSkuId
 
+
+Get-MsolAccountSku
+
 #For Each user loop to pull license data
 $licensedetails = (Get-MsolUser -UserPrincipalName `
   "ariel.hart@colonystarwood.com").Licenses
@@ -74,3 +77,7 @@ $lines | Export-CSV C:\scriptoutput\E1Licenses.csv
   -UserPrincipalName "Aiden.Hong@colonyamerican.com"
 
   $userLicenseTest.IsLicensed
+
+#Get list by license type
+
+get-MSOLUser -All | where {$_.isLicensed -eq "TRUE" -and $_.Licenses.AccountSKUID -eq "Colonyamerican:POWER_BI_STANDARD"} | select displayname,userprincipalname,isLicensed

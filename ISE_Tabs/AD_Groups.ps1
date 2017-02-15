@@ -11,7 +11,7 @@ foreach ($C in $CRMGroups)
 
 
 #Get members of a group
-Get-ADGroupmember "CMP_Prod" |Select-Object Name |Export-csv -path c:\ScriptOutput\CMP_Prod$((Get-Date).ToString('MM-dd-yyyy')).csv 
+Get-ADGroupmember "FS-SWAYDrive" |Select-Object name |Export-csv -path c:\ScriptOutput\FS-SWAYDrive$((Get-Date).ToString('MM-dd-yyyy')).csv 
 
 #Get All the groups members -with description
 $ADGroups = Get-ADGroup -Filter * -SearchBase "OU=CAH_Groups,DC=colonyah,DC=local" -Properties Description
