@@ -71,12 +71,12 @@ Get-dis
 
 #bulk add users to group 
 
-$members = Import-Csv C:\ScriptsOutput\CAH_Employees.csv
+$members = Import-Csv C:\ScriptOutput\AcqDailyPropDetail.csv
 
 Foreach ($member in $members)
 
 {
-Add-distributiongroupmember -identity "CAH" -Member $member.userprincipalname
+Add-distributiongroupmember -identity "Acq Daily Prop Detail" -Member $member.userprincipalname
 }
 
 
