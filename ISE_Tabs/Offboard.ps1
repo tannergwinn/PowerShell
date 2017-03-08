@@ -50,7 +50,11 @@ Get-ADUser -filter 'enabled -eq $true'  -Properties * -SearchBase "OU=CAH_MailBo
 #Get the Users who are offboarded send to file
 ##############################################
 
-Get-ADUser -filter 'enabled -eq $true'  -Properties Userprincipalname -SearchBase "OU=CAH_MailBox_Backup,DC=colonyah,DC=local" | Select-object Userprincipalname | Export-csv -path c:\ScriptOutput\OffboardList_$((Get-Date).ToString('MM-dd-yyyy')).csv 
+Get-ADUser -filter 'enabled -eq $true'  -Properties Userprincipalname -SearchBase "OU=CAH_MailBox_Backup,DC=colonyah,DC=local" | 
+    Select-object @{n="SourceMailbox"; e= {$_.Userprincipalname}}, @{n='ExportDirectory';e={"C:\PSTFiles"}}, @{n='ExportMailbox';e={"TRUE"}}, @{n='ExportArchive';e={"TRUE"}}, @{n='ExportDumpster';e={"TRUE"}}|
+    Export-csv -path c:\ScriptOutput\OffboardList_$((Get-Date).ToString('MM-dd-yyyy')).csv 
+
+
 
 ########################
 #Set users hide from GAL
@@ -102,3 +106,29 @@ Remove-MsolUser -UserPrincipalName $o.UserPrincipalName -Force
 }
 
 
+
+
+
+
+
+$users= get-aduser -filter 'enabled -eq $True' -Properties SamAccountName, UserPrincipalName -SearchBase "OU=CAH_MailBox_Backup,DC=colonyah,DC=local"
+
+Function RemoveMemberships
+
+{
+param([string]$SAMAccountName) 
+$user = Get-ADUser $SAMAccountName -properties memberof
+$userGroups = $user.memberof
+$userGroups | %{get-adgroup $_ | Remove-ADGroupMember -confirm:$false -member $SAMAccountName}
+$userGroups = $null
+} $users | %{RemoveMemberships $_.SAMAccountName}
+
+
+
+foreach ($user in $users) 
+
+{
+
+Add-ADGroupMember -Identity "O365_E3" -Members $user.Samaccountname
+
+} 

@@ -9,12 +9,19 @@ Import-Module Microsoft.Online.SharePoint.PowerShell -DisableNameChecking
 #Get all the Sites
 Get-SPOSite | Select-Object Title, LastContentModifiedDate, Owner, Url | Export-csv C:\ScriptOutput\SharepointSitesList.csv
 
-Get-SPOSite -Identity https://colonyamerican.sharepoint.com/sites/audit
+Get-SPOSite -Identity https://colonyamerican.sharepoint.com/sites/HomeBase 
 
 Set-SPOSite -Identity https://colonyamerican.sharepoint.com/sites/audit -Owner Ariel.hart@colonystarwood.com
 
 
 
+#get the Groups of a site
+
+Get-SPOSiteGroup -Site https://colonyamerican.sharepoint.com/sites/HomeBase | Select-Object Loginname | Export-Csv C:\ScriptOutput\SPOSiteGroups.csv
+
+#Add users to a group of a site
+
+Add-SPOUser -Site https://colonyamerican.sharepoint.com/sites/HomeBase -LoginName Randy.Melvin@colonystarwood.com -Group "PM & Leasing Owners"
 
 
 
