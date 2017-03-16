@@ -11,21 +11,43 @@ Get-SPOSite | Select-Object Title, LastContentModifiedDate, Owner, Url | Export-
 
 Get-SPOSite -Identity https://colonyamerican.sharepoint.com/sites/HomeBase 
 
-Set-SPOSite -Identity https://colonyamerican.sharepoint.com/sites/audit -Owner Ariel.hart@colonystarwood.com
+Set-SPOSite -Identity https://colonyamerican.sharepoint.com/teams/QualityAssurance -Owner Ariel.hart@colonystarwood.com
 
 
 
 #get the Groups of a site
 
-Get-SPOSiteGroup -Site https://colonyamerican.sharepoint.com/sites/HomeBase | Select-Object Loginname | Export-Csv C:\ScriptOutput\SPOSiteGroups.csv
+Get-SPOSiteGroup -Site https://colonyamerican.sharepoint.com/sites/TechnologyCompliance | Select-Object Loginname | Export-Csv C:\ScriptOutput\SPOSiteGroups.csv
 
 #Add users to a group of a site
 
 Add-SPOUser -Site https://colonyamerican.sharepoint.com/sites/HomeBase -LoginName Randy.Melvin@colonystarwood.com -Group "PM & Leasing Owners"
 
 
+##Change Sharepoint Sharing
 
+$SPOSite = "https://colonyamerican.sharepoint.com/sites/TechnologyCompliance"
 
+Set-SPOSite -Identity $SPOSite -SharingCapability ExternalUserAndGuestSharing
+        
+        #Other sharing options include:
+        
+        #Disabled – external user sharing (share by email) and guest link sharing are both disabled
+        
+        #ExternalUserSharingOnly – external user sharing (share by email) is enabled, but guest link sharing is disabled, or 
+        
+        #ExternalUserAndGuestSharing - external user sharing (share by email) and guest link sharing are both enabled.
+
+##Check Sharepoint Shareing
+
+Get-SPOSite -Identity $SPOSite | FL
+        
+##Set External Link Expiration time
+#Set-SPOTenant –RequireAnonymousLinksExpireInDays 30 
+
+#GUI for the Groups Setting
+
+https://colonyamerican.sharepoint.com/sites/TechnologyCompliance/_layouts/15/groups.aspx
 
 
 

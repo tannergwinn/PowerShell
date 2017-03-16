@@ -1,8 +1,6 @@
 ﻿# Connect to EXO
 $creds = Get-Credential
-$Session = New-PSSession -ConfigurationName Microsoft.Exchange `
-    -ConnectionUri https://outlook.office365.com/powershell-liveid/  `
-    -Credential $creds -Authentication Basic -AllowRedirection
+$Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://outlook.office365.com/powershell-liveid/ -Credential $creds -Authentication Basic -AllowRedirection
 Import-PSSession $Session
 
 #Connect Msol
@@ -129,5 +127,24 @@ $DN=$mailbox.DistinguishedName
 $Filter = "Members -like ""$DN"""
 Get-DistributionGroup -ResultSize Unlimited -Filter $Filter | Remove-distributiongroupmember
 
+
+#Get members of a group recusively (Does not work on dynamic groups)
+
+function Get-DistributionGroupMemberRecursive ($GroupIdentity) {
+	$member_list = Get-DistributionGroupMember -Identity $GroupIdentity
+	foreach ($member in $member_list) {
+		if ($member.RecipientType -like '*Group*') {
+			Get-DistributionGroupMemberRecursive -GroupIdentity $member.Identity
+		} else {
+			$member
+		}
+	}
+}
+
+$group = Get-DistributionGroup "Acq-DailyPropDetail"
+Get-DistributionGroupMemberRecursive -GroupIdentity $group.Identity
+
+ 
+ Get-DistributionGroupMember -Identity "Asset Management – Asset Managers" | Select-Object PrimarySmtpAddress | Export-Csv "C:\ScriptOutput\Asset Management – Asset Managers_MemberList03.09.17.csv"
 
 
