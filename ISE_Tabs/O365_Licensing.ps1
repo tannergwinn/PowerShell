@@ -81,3 +81,6 @@ $lines | Export-CSV C:\scriptoutput\E1Licenses.csv
 #Get list by license type
 
 get-MSOLUser -All | where {$_.isLicensed -eq "TRUE" -and $_.Licenses.AccountSKUID -eq "Colonyamerican:POWER_BI_STANDARD"} | select displayname,userprincipalname,isLicensed
+
+#Tenant ID
+(Invoke-WebRequest https://login.windows.net/YourDomainn.onmicrosoft.com/.well-known/openid-configuration|ConvertFrom-Json).token_endpoint.Split(‘/’)[3]

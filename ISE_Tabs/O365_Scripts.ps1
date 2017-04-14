@@ -15,6 +15,8 @@ connect-msolservice -credential $msolcred
 
 #O365 manipulations
 
+
+
 ##Calendar permissions-
 
 $Owner = write arik.prawer@colonyamerican.com:\Calendar
