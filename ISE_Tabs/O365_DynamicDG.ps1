@@ -6,7 +6,7 @@ Import-PSSession $Session
 
 
 #Get Dynamic list Members - Export
-$DDG = Get-DynamicDistributionGroup "Regional Managers"
+$DDG = Get-DynamicDistributionGroup "Accounting - All"
 
 Foreach ($dg in $DDG)
 {
@@ -15,14 +15,14 @@ Get-Recipient -RecipientPreviewFilter $DG.RecipientFilter -ResultSize "Unlimited
 
 #Get members of single list - Count
 
-$DG = Get-DynamicDistributionGroup "TechnologyDepartment"
+$DG = Get-DynamicDistributionGroup "Accounting - All"
 
 Get-Recipient -RecipientPreviewFilter $DG.RecipientFilter | Select-Object DisplayName, @{Name=“DDG.Name”;Expression={$dg.Name}} | Measure
 
 #Get Dynamic List Filter
-Get-DynamicDistributionGroup "TechnologyDepartment" | fl recipientfilter
+Get-DynamicDistributionGroup "Accounting - All" | fl recipientfilter
 
-#Set Dunamic List filter- !!! do not forget the "{}" around the filter value !!!
+#Set Dynamic List filter- !!! do not forget the "{}" around the filter value !!!
 
 #Template --> Get-DynamicDistributionGroup PropertyManagement-AltamonteSprings | Set-DynamicDistributionGroup -recipientfilter {<PutFilterHere>}
 
@@ -31,6 +31,10 @@ Get-DynamicDistributionGroup "TechnologyDepartment" | Set-DynamicDistributionGro
 Get-DynamicDistributionGroup "CSH-ALL" | Set-DynamicDistributionGroup -recipientfilter {(RecipientTypedetails -eq 'UserMailbox') -and (-not(Company -like 'Colony American Finance*'))}
 
 Get-DynamicDistributionGroup "ScottsdaleOffice" | Set-DynamicDistributionGroup -recipientfilter { ((RecipientType -eq 'UserMailbox') -and (Office -like 'Scottsdale')) -and (((-not(Name -like 'SystemMailbox{*')) -and (-not(Title -like 'Call Center Agent'))))}
+
+
+#Using the "or" statement
+Get-DynamicDistributionGroup "Accounting - All" | Set-DynamicDistributionGroup -recipientfilter {((RecipientType -eq 'UserMailbox') -and (Department -eq 'Accounting' -or Department -eq 'Accounts Receivable'))}
 
 
 #Create dynamic distribution list
