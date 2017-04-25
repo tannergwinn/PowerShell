@@ -153,3 +153,14 @@ Get-mailbox -Identity $RMBX.alias | Remove-MailboxPermission  -User $RMBUser -Ac
 Get-Mailbox -SoftDeletedMailbox -Identity user@domain.com |fl *guid
 Remove-Mailbox -Identity 8f1f3498-cc94-4c86-9b30-3293cb3cacb2 -PermanentlyDelete
 
+
+
+##Access to a shared mailbox
+Get-mailbox Denver@colonystarwood.com  
+
+Get-MailboxPermission Denver@colonystarwood.com | where { ($_.AccessRights -eq “FullAccess”) -and ($_.IsInherited -eq $false) -and -not ($_.User -like “NT AUTHORITY\SELF”) } | Select-Object Identiy, User
+
+
+
+ | ft identity,user,accessrights
+

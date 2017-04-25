@@ -12,7 +12,9 @@ foreach ($C in $CRMGroups)
 
 #Get members of a group
 
-Get-ADGroupmember "FS-CompassReports_RO" |Select-Object name |Export-csv -path c:\ScriptOutput\FS-CompassReports_RO$((Get-Date).ToString('MM-dd-yyyy')).csv 
+Get-ADGroupmember "O365_SkypeConferenceCalling" | Measure 
+
+| select-Object name |Export-csv -path c:\ScriptOutput\FS-CompassReports_RO$((Get-Date).ToString('MM-dd-yyyy')).csv 
 
 #Get All the groups members -with description
 $ADGroups = Get-ADGroup -Filter * -SearchBase "OU=CAH_Groups,DC=colonyah,DC=local" -Properties Description
