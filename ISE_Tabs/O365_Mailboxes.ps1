@@ -160,7 +160,20 @@ Get-mailbox Denver@colonystarwood.com
 
 Get-MailboxPermission Denver@colonystarwood.com | where { ($_.AccessRights -eq “FullAccess”) -and ($_.IsInherited -eq $false) -and -not ($_.User -like “NT AUTHORITY\SELF”) } | Select-Object Identiy, User
 
+| ft identity,user,accessrights Get-mailbo
 
 
- | ft identity,user,accessrights
 
+#Get members of all shared mailboxs
+
+$Mailboxes = Get-Mailbox -RecipientTypeDetails SharedMailbox -ResultSize:Unlimited | Select Identity,Alias,DisplayName | sort displayname
+
+
+ $mailboxes | sort displayname | foreach {Get-MailboxPermission -Identity $_.alias | ft identity,user,accessrights} >SharedPermissions.txt
+
+ #Or just 1
+
+ $Mailboxes = Get-Mailbox AR.Report@Colonystarwood.com | Select Identity,Alias,DisplayName | sort displayname
+
+
+ $mailboxes | sort displayname | foreach {Get-MailboxPermission -Identity $_.alias | Select-Object identity,user,accessrights} | Export-csv C:\ScriptOutput\Memberlist.csv

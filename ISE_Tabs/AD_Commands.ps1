@@ -288,3 +288,19 @@ Get-ADUser -filter  "Surname -eq 'Torres'"  -properties passwordlastset, LastLog
 Get-ADUser -Filter 'surname -like "peterson"' -Properties Title, Office, company
 
 Get-ADUser -Filter * -Properties DisplayName, Description
+
+
+#Look up AD data based on list
+
+$Users = Import-Csv -Path 'C:\users\a.hart\Downloads\Google Users.csv'
+           
+foreach ($User in $Users)            
+{  
+
+ $DisplayName = $User.'Users'
+ 
+
+Get-ADUser -filter {(Displayname -like $Displayname) -and (enabled -eq $true)} -Properties GivenName, Surname, mail | Select-Object GivenName, Surname, mail | Export-Csv C:\ScriptOutput\GoogleUserContactDetails.csv -Append
+}
+
+Get-ADUser -filter {(Displayname -like 'Francisco*') -and (enabled -eq $true)} -Properties GivenName, Surname, mail | Select-Object GivenName, Surname, mail
