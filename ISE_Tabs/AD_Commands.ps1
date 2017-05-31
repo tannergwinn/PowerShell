@@ -304,3 +304,6 @@ Get-ADUser -filter {(Displayname -like $Displayname) -and (enabled -eq $true)} -
 }
 
 Get-ADUser -filter {(Displayname -like 'Francisco*') -and (enabled -eq $true)} -Properties GivenName, Surname, mail | Select-Object GivenName, Surname, mail
+
+
+Get-ADForest colonyah.local | FL GlobalCatalogs
