@@ -77,4 +77,5 @@ Get-ADUser "CN=Ariel Hart,OU=SDL-200,OU=CAH_Users,DC=colonyah,DC=local"
 
 
 
-
+#Pulling group lists by name
+Get-ADGroup -Filter {(name -like "*CMP*") -or (name -like "Atlas*")} -Properties Description, Whencreated | Select-Object Name, Description, whencreated | Export-Csv C:\Scriptoutput\GroupsInfo.csv
